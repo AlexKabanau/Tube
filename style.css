@@ -12,7 +12,6 @@ body {
   position: relative;
   margin: 0 auto;
   width: 90%;
-  font-family: 'Arial';
 }
 
 * {
@@ -23,15 +22,12 @@ body {
 }
 form {
     margin: 0 auto;
+    margin-top: 20px;
     padding: 20px;
     width: 300px; 
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 0 0 10px #ccc;
-}
-label {
-    display: block;
-    margin-bottom: 5px;
 }
 input,
 textarea {
@@ -46,7 +42,7 @@ input {
     height: 24px;
 }
 
-input[type="submit"] { 
+button { 
     display: inline-block;
     margin: 0 5px;
     padding: 6px 15px;
@@ -56,8 +52,4 @@ input[type="submit"] {
     border-radius: 5px;
     background: #2c3e50;
     color: #fff;
-}
-.buttons {
-    margin-top: 10px;
-    text-align: center;
 }
