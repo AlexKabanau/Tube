@@ -1,0 +1,120 @@
+html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  display: block;
+}
+
+
+body {
+  min-height: 100%;
+  height: 100%;
+  position: relative;
+  margin: 0 auto;
+  width: 90%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: black;
+}
+
+form {
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 20px;
+    width: 300px; 
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px #ccc;
+}
+input,
+textarea {
+    margin-bottom:10px;
+    padding: 2px 5px;
+    width: 95%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "Roboto";
+}
+input {
+    height: 24px;
+}
+
+input[type='button'] { 
+    display: inline-block;
+    margin: 0 5px;
+    padding: 6px 15px;
+    width: auto;
+    height: auto;
+    border: none;
+    border-radius: 5px;
+    background: #2c3e50;
+    color: #fff;
+}
+
+.container {
+  width: 90%;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px #ccc;
+}
+
+.galleryItem {
+  color: #797478;
+  font: 10px/1.5 Verdana, Helvetica, sans-serif;
+  float: left;
+}
+ 
+.galleryItem h4 {
+  text-transform: uppercase;
+}
+ 
+.galleryItem img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+.galleryItem p {
+overflow: hidden;
+white-space:nowrap;
+text-overflow: ellipsis;
+}
+.galleryItem {
+  color: #797478;
+  font: 10px/1.5 Verdana, Helvetica, sans-serif;
+  float: left;  
+  width: 16%;
+  margin:  2% 2% 50px 2%; 
+}
+
+/* MМЕДИА ЗАПРОСЫ*/
+@media only screen and (max-width : 940px),
+only screen and (max-device-width : 940px){
+  .galleryItem {width: 21%;}
+}
+ 
+@media only screen and (max-width : 720px),
+only screen and (max-device-width : 720px){
+  .galleryItem {width: 29.33333%;}
+}
+ 
+@media only screen and (max-width : 530px),
+only screen and (max-device-width : 530px){
+  .galleryItem {width: 46%;}
+}
+ 
+@media only screen and (max-width : 320px),
+only screen and (max-device-width : 320px){
+  .galleryItem {width: 96%;}
+  .galleryItem img {width: 96%;}
+  .galleryItem h3 {font-size: 18px;}
+  .galleryItem p, {font-size: 18px;}
+}
+
+
+
+
