@@ -1,3 +1,9 @@
+/*var form = document.querySelector("form");
+  form.addEventListener("submit", function(event) {
+    onClientLoad();
+    event.preventDefault();
+  });
+*/
 function showResponse(elements) {
     
     var container = document.createElement('div');
