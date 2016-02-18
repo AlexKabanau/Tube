@@ -75,7 +75,7 @@ button {
   color: #797478;
   font: 10px/1.5 Verdana, Helvetica, sans-serif;
   float: left;  
-  
+  /*width: 21%;*/
   margin:  2% 2% 50px 2%; 
 }
 

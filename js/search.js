@@ -4,6 +4,28 @@
     event.preventDefault();
   });
 */
+var main = document.createElement('main');
+
+var container = document.createElement('div');
+    container.className = 'container';
+var inputSearch = document.createElement('input');
+    inputSearch.id = 'search';
+    inputSearch.setAttribute('type', search);
+    inputSearch.setAttribute('value', search);
+    inputSearch.autofocus;
+    inputSearch.required;
+    
+    container.appendChild(inputSearch);
+
+var buttonSearch = document.createElement('button');
+    buttonSearch.setAttribute('onclick', onClientLoad());
+    buttonSearch.innerHTML = 'Поиск';
+
+    container.appendChild(buttonSearch);
+
+main.appendChild(container);
+document.body.appendChild(main);
+
 
 
 function showResponse(elements) {
@@ -99,13 +121,3 @@ id: videoIds.join(',')
 //Show results with rich data
 request.execute(showResponse); 
 }
-
-/*function style() {
-    
-    var widthClient = document.documentElement.clientWidth;
-    var nCol = (widthClient - (widthClient % 300))/300;
-    var widthItem = (widthClient - nCol*(widthClient*0.02))/nCol;
-    if (widthItem<300) {widthItem = 300};
-    var galleryItem = document.getElementsByClassName("galleryItem");
-    galleryItem.style.width = (widthItem) + 'px'; 
-}*/
