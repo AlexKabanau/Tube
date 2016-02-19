@@ -4,14 +4,16 @@
     event.preventDefault();
   });
 */
+function addElements(){
+
 var main = document.createElement('main');
 
 var container = document.createElement('div');
     container.className = 'container';
 var inputSearch = document.createElement('input');
     inputSearch.id = 'search';
-    inputSearch.setAttribute('type', search);
-    inputSearch.setAttribute('value', search);
+    inputSearch.type = 'search';
+    inputSearch.value = '';
     inputSearch.autofocus;
     inputSearch.required;
     
@@ -24,9 +26,11 @@ var buttonSearch = document.createElement('button');
     container.appendChild(buttonSearch);
 
 main.appendChild(container);
+
 document.body.appendChild(main);
 
-
+}
+addElements();
 
 function showResponse(elements) {
     
@@ -91,10 +95,10 @@ function onClientLoad() {
 
 function onYouTubeApiLoad() {
     gapi.client.setApiKey('AIzaSyDydcKXefY4Zcn0m4fFybaEIK0pw-bJtTs');
-    search();
+    searchYouTube();
 }
 
-function search() {
+function searchYouTube() {
     var search = document.getElementById('search').value;
     var request = gapi.client.youtube.search.list({
         part: 'id, snippet',
