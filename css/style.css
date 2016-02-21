@@ -60,6 +60,9 @@ button {
  
 .galleryItem h4 {
   text-transform: uppercase;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
 }
  
 .galleryItem img {

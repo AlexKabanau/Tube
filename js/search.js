@@ -36,11 +36,10 @@ document.body.appendChild(main);
 var listener = document.getElementById("search");
   listener.addEventListener("keydown", function(event) {
     if (event.keyCode == 13) {
-       window.onload = onClientLoad();
+      window.onload = onClientLoad();
       event.preventDefault();
     }
-    
-  });
+});
 function showResponse(elements) {
     
     var container = document.createElement('div');
@@ -53,10 +52,10 @@ function showResponse(elements) {
     container.appendChild(galleryItem);
     ////////style();////////
     var widthClient = document.documentElement.clientWidth;
-    var nCol = (widthClient - (widthClient % 300))/300;
-    var widthItem = (widthClient - nCol*(widthClient*0.02))/nCol;
-    if (widthItem<300) {widthItem = 300};
-    galleryItem.style.width = (widthItem) + 'px'; 
+    var nCol = (widthClient - (widthClient % 300))/300;/*nunmer of column*/
+    var widthItem = 100/(nCol) - 4;/*4=2%*2padding*/
+    if ((widthClient-nCol*(widthClient*0.02)/nCol)<300) {widthItem = 33.33};
+    galleryItem.style.width = (widthItem) + '%'; 
 
     var a = document.createElement('a');
     a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
@@ -108,12 +107,12 @@ function onYouTubeApiLoad() {
 }
 
 function searchYouTube() {
-    var search = document.getElementById('search');
-    if (search != null){
+    var search = document.getElementById('search').value;
+    if (search != ''){
     var request = gapi.client.youtube.search.list({
         part: 'id, snippet',
         maxResults: 15,
-        q: search.value
+        q: search
     });
     request.execute(loadStats);
     };
