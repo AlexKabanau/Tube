@@ -51,8 +51,12 @@ button {
   background-color: #fff;
   box-shadow: 0 0 10px #ccc;
 }
-body.container {
+article {
+  overflow: hidden;
+}
+article .container {
   width: 300%;
+  box-sizing: border-box;
 }
 .galleryItem {
   color: #797478;
@@ -60,6 +64,8 @@ body.container {
   float: left;
   padding: 3px;
   box-sizing: border-box;
+  margin:  2% 2% 50px 2%; 
+  width: 450px;
 }
 
 .galleryItem:hover {
@@ -84,13 +90,7 @@ body.container {
   white-space:nowrap;
   text-overflow: ellipsis;
 }
-.galleryItem {
-  color: #797478;
-  font: 10px/1.5 Verdana, Helvetica, sans-serif;
-  float: left;  
-  /*width: 21%;*/
-  margin:  2% 2% 50px 2%; 
-}
+
 
 /* MМЕДИА ЗАПРОСЫ*/
 /*@media only screen and (max-width : 940px),

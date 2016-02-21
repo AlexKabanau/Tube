@@ -46,9 +46,11 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
     });
 function showResponse(elements) {
     
-    var container = document.createElement('div');
+
+var article = document.createElement('article');
+var container = document.createElement('div');
   container.className = 'container';
-  container.style.width = 300 + '%';
+ // container.style.width = 300 + '%';
   
   
   for (var i=0; i<15; i++){
@@ -56,12 +58,12 @@ function showResponse(elements) {
     galleryItem.className = 'galleryItem';
     container.appendChild(galleryItem);
     ////////style();////////
-    var widthClient = document.documentElement.clientWidth;
+/*    var widthClient = document.documentElement.clientWidth;
     var nCol = (widthClient - (widthClient % 300))/300;/*nunmer of column*/
-    var widthItem = 100/(nCol) - 4;/*4=2%*2padding*/
-    if ((widthClient-nCol*(widthClient*0.02)/nCol)<300) {widthItem = 33.33};
+/*    var widthItem = 100/(nCol) - 4;/*4=2%*2padding*/
+/*    if ((widthClient-nCol*(widthClient*0.02)/nCol)<300) {widthItem = 33.33};
     galleryItem.style.width = (widthItem) + '%'; 
-
+*/
     var a = document.createElement('a');
     a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
     galleryItem.appendChild(a);
@@ -97,7 +99,14 @@ function showResponse(elements) {
     galleryItem.appendChild(h6);
     
   }
-  document.body.appendChild(container);
+  article.appendChild(container);
+  document.body.appendChild(article)
+
+  var buttonReSearch = document.createElement('button');
+    buttonReSearch.id = 'buttonReSearch';
+    buttonReSearch.innerHTML = 'Добавить';
+
+    document.body.appendChild(buttonReSearch);
   
 
 }
