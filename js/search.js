@@ -14,7 +14,8 @@ var inputSearch = document.createElement('input');
     inputSearch.id = 'search';
     inputSearch.type = 'search';
     inputSearch.setAttribute('value', '');
-    inputSearch.autofocus;
+    inputSearch.placeholder = "Я ищу...";
+    inputSearch.focus();
     inputSearch.required;
     
     container.appendChild(inputSearch);
@@ -107,6 +108,7 @@ function onYouTubeApiLoad() {
 }
 
 function searchYouTube() {
+    document.getElementById('search').focus();
     var search = document.getElementById('search').value;
     if (search != ''){
     var request = gapi.client.youtube.search.list({
