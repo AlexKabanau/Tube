@@ -4,7 +4,7 @@
     event.preventDefault();
   });
 */
-function addElements(){
+(function addElements(){
 
 var main = document.createElement('main');
 
@@ -13,14 +13,14 @@ var container = document.createElement('div');
 var inputSearch = document.createElement('input');
     inputSearch.id = 'search';
     inputSearch.type = 'search';
-    inputSearch.value = '';
+    inputSearch.setAttribute('value', '');
     inputSearch.autofocus;
     inputSearch.required;
     
     container.appendChild(inputSearch);
 
 var buttonSearch = document.createElement('button');
-    buttonSearch.setAttribute('onclick', onClientLoad());
+    //buttonSearch.setAttribute('onclick', onClientLoad());
     buttonSearch.innerHTML = 'Поиск';
 
     container.appendChild(buttonSearch);
@@ -29,9 +29,18 @@ main.appendChild(container);
 
 document.body.appendChild(main);
 
-}
-addElements();
+})()
 
+
+
+var listener = document.getElementById("search");
+  listener.addEventListener("keydown", function(event) {
+    if (event.keyCode == 13) {
+       window.onload = onClientLoad();
+      event.preventDefault();
+    }
+    
+  });
 function showResponse(elements) {
     
     var container = document.createElement('div');
@@ -42,7 +51,7 @@ function showResponse(elements) {
     var galleryItem = document.createElement('div');
     galleryItem.className = 'galleryItem';
     container.appendChild(galleryItem);
-    /*style();*/
+    ////////style();////////
     var widthClient = document.documentElement.clientWidth;
     var nCol = (widthClient - (widthClient % 300))/300;
     var widthItem = (widthClient - nCol*(widthClient*0.02))/nCol;
@@ -99,13 +108,15 @@ function onYouTubeApiLoad() {
 }
 
 function searchYouTube() {
-    var search = document.getElementById('search').value;
+    var search = document.getElementById('search');
+    if (search != null){
     var request = gapi.client.youtube.search.list({
         part: 'id, snippet',
         maxResults: 15,
-        q: search
+        q: search.value
     });
     request.execute(loadStats);
+    };
 }
 
 function loadStats(searchResult) { 
