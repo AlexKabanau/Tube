@@ -51,12 +51,22 @@ button {
   background-color: #fff;
   box-shadow: 0 0 10px #ccc;
 }
-
+body.container {
+  width: 300%;
+}
 .galleryItem {
   color: #797478;
   font: 10px/1.5 Verdana, Helvetica, sans-serif;
   float: left;
+  padding: 3px;
+  box-sizing: border-box;
 }
+
+.galleryItem:hover {
+  box-shadow: 0 0 10px #D69616;
+  border-radius: 10px;
+}
+
  
 .galleryItem h4 {
   text-transform: uppercase;

@@ -8,6 +8,7 @@
 
 var main = document.createElement('main');
 
+
 var container = document.createElement('div');
     container.className = 'container';
 var inputSearch = document.createElement('input');
@@ -15,13 +16,11 @@ var inputSearch = document.createElement('input');
     inputSearch.type = 'search';
     inputSearch.setAttribute('value', '');
     inputSearch.placeholder = "Я ищу...";
-    inputSearch.focus();
-    inputSearch.required;
     
     container.appendChild(inputSearch);
 
 var buttonSearch = document.createElement('button');
-    //buttonSearch.setAttribute('onclick', onClientLoad());
+    buttonSearch.id = 'buttonSearch';
     buttonSearch.innerHTML = 'Поиск';
 
     container.appendChild(buttonSearch);
@@ -32,19 +31,24 @@ document.body.appendChild(main);
 
 })()
 
+document.getElementById('search').focus();
 
 
-var listener = document.getElementById("search");
-  listener.addEventListener("keydown", function(event) {
+
+document.getElementById("search").addEventListener("keydown", function(event) {
     if (event.keyCode == 13) {
       window.onload = onClientLoad();
       event.preventDefault();
     }
 });
+document.getElementById("buttonSearch").addEventListener("click", function() {
+      window.onload = onClientLoad();
+    });
 function showResponse(elements) {
     
     var container = document.createElement('div');
   container.className = 'container';
+  container.style.width = 300 + '%';
   
   
   for (var i=0; i<15; i++){
@@ -108,7 +112,6 @@ function onYouTubeApiLoad() {
 }
 
 function searchYouTube() {
-    document.getElementById('search').focus();
     var search = document.getElementById('search').value;
     if (search != ''){
     var request = gapi.client.youtube.search.list({
