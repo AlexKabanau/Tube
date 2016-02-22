@@ -44,10 +44,14 @@ document.getElementById("search").addEventListener("keydown", function(event) {
 document.getElementById("buttonSearch").addEventListener("click", function() {
       window.onload = onClientLoad();
     });
-document.getElementById("buttonReSearch").addEventListener("click", function() {
-      reSearch = document.body.article.getElementsByClassName('container');
-      reSearch[1].style.transform = 'translate(-450px)';
-    });
+
+
+function showNewItems () {
+    var addTransform = document.body.getElementsByClassName('container');
+      addTransform[1].style.transform = 'translate(-450px)';
+      return false;
+}
+
 function showResponse(elements) {
     
 
@@ -108,9 +112,15 @@ var container = document.createElement('div');
 
   var buttonReSearch = document.createElement('button');
     buttonReSearch.id = 'buttonReSearch';
-    buttonReSearch.innerHTML = 'Добавить';
+    buttonReSearch.innerHTML = 'Вперед';
+    
 
     document.body.appendChild(buttonReSearch);
+
+    document.getElementById("buttonReSearch").addEventListener("click", function() {
+    window.onload = showNewItems();
+    
+ });
   
 
 }

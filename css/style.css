@@ -62,8 +62,9 @@ article .container {
   width: 1200%;
   box-sizing: border-box;
   padding: 2%;
-  transform: translate(-900px);
+  transition: transform .8s ease;
 }
+
 .galleryItem {
   color: #797478;
   font: 10px/1.5 Verdana, Helvetica, sans-serif;
