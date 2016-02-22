@@ -59,7 +59,7 @@ article {
   box-shadow: 0 0 10px #ccc;
 }
 article .container {
-  width: 1200%;
+  width: 1800%;
   box-sizing: border-box;
   padding: 2%;
   transition: transform .8s ease;
