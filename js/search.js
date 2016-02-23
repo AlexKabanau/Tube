@@ -3,6 +3,15 @@
     onClientLoad();
     event.preventDefault();
   });
+
+
+  function showNewItems () {
+    var addTransform = document.body.getElementsByClassName('container');
+      addTransform[1].style.transform = 'translate(-450px)';
+document.getElementById("buttonReSearch").addEventListener("click", function() {
+    window.onload = showNewItems();
+    
+ });
 */
 (function addElements(){
 
@@ -37,19 +46,20 @@ document.getElementById('search').focus();
 
 document.getElementById("search").addEventListener("keydown", function(event) {
     if (event.keyCode == 13) {
-      window.onload = onClientLoad();
+      onClientLoad();
       event.preventDefault();
     }
 });
 document.getElementById("buttonSearch").addEventListener("click", function() {
-      window.onload = onClientLoad();
+      onClientLoad();
     });
 
 
 
 function showItems() {
     var reSearch = document.body.getElementsByClassName('container');
-      reSearch[1].style.transform = 'translateX(-450px)';
+      reSearch[1].style.transform = 'translate(-450px)';
+
 }
 
 function showResponse(elements) {
@@ -119,7 +129,7 @@ var container = document.createElement('div');
     document.body.appendChild(buttonReSearch);
 
     document.getElementById("buttonReSearch").addEventListener("click", function(event) {
-      window.onload = showItems();
+      showItems();
       event.preventDefault();
     });
 

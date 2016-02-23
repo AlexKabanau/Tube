@@ -63,6 +63,8 @@ article .container {
   box-sizing: border-box;
   padding: 2%;
   transition: transform .8s ease;
+  transform: translate(0.5px);
+
 }
 
 .galleryItem {
