@@ -58,7 +58,8 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
 
 function showItems() {
     var reSearch = document.body.getElementsByClassName('container');
-      reSearch[1].style.transform = 'translate(-450px)';
+    var widthClient = 0.9*document.documentElement.clientWidth;
+      reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 
 }
 
@@ -76,12 +77,13 @@ var container = document.createElement('div');
     galleryItem.className = 'galleryItem';
     container.appendChild(galleryItem);
     ////////style();////////
-/*    var widthClient = document.documentElement.clientWidth;
+    var widthClient = 0.9*document.documentElement.clientWidth;
     var nCol = (widthClient - (widthClient % 300))/300;/*nunmer of column*/
-/*    var widthItem = 100/(nCol) - 4;/*4=2%*2padding*/
-/*    if ((widthClient-nCol*(widthClient*0.02)/nCol)<300) {widthItem = 33.33};
-    galleryItem.style.width = (widthItem) + '%'; 
-*/
+    if (nCol>5) {nCol = 5};
+    var widthItem = widthClient/(nCol) - 3*2/**/;/*10=5px*2padding*/
+    if (widthItem<300) {widthItem = 300};
+    galleryItem.style.width = (widthItem) + 'px'; 
+
     var a = document.createElement('a');
     a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
     galleryItem.appendChild(a);
@@ -120,15 +122,16 @@ var container = document.createElement('div');
   article.appendChild(container);
   document.body.appendChild(article)
 
-  var buttonReSearch = document.createElement('button');
-    buttonReSearch.id = 'buttonReSearch';
-    buttonReSearch.innerHTML = 'Добавить';
+  var buttonNext = document.createElement('button');
+    buttonNext.id = 'buttonNext';
+    buttonNext.innerHTML = 'Далее';
+    buttonNext.style = 'position: relative; left: 100%; margin-left: -80px;'
 
 
 
-    document.body.appendChild(buttonReSearch);
+    document.body.appendChild(buttonNext);
 
-    document.getElementById("buttonReSearch").addEventListener("click", function(event) {
+    document.getElementById("buttonNext").addEventListener("click", function(event) {
       showItems();
       event.preventDefault();
     });
