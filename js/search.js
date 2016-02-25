@@ -55,15 +55,13 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
     });
 
 
-function makeCounter() {
-      var current = 1;
-      return function() {return current++;};
-    }
-var counter = makeCounter();
 
-function showItems(counter) {
+
+function showItems() {
+    for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left>document.documentElement.clientWidth*0.9){var next = i; break;}};
     var reSearch = document.body.getElementsByClassName('container');
-    var widthClient = counter()*0.9*document.documentElement.clientWidth;
+    nCol = (document.documentElement.clientWidth - (document.documentElement.clientWidth % 300))/300;
+    var widthClient = next*0.9*document.documentElement.clientWidth/nCol;
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 
 }
@@ -85,7 +83,7 @@ var container = document.createElement('div');
     var widthClient = 0.9*document.documentElement.clientWidth;
     var nCol = (widthClient - (widthClient % 300))/300;/*nunmer of column*/
     if (nCol>5) {nCol = 5};
-    var widthItem = widthClient/(nCol) - 3*2/**/;/*10=5px*2padding*/
+    var widthItem = widthClient/(nCol) - 3*2/**/;/*6=3px*2padding*/
     if (widthItem<300) {widthItem = 300};
     galleryItem.style.width = (widthItem) + 'px'; 
 
@@ -137,7 +135,7 @@ var container = document.createElement('div');
     document.body.appendChild(buttonNext);
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
-      showItems(counter);
+      showItems();
     //  event.preventDefault();
     });
 
