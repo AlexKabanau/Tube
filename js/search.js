@@ -55,10 +55,15 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
     });
 
 
+function makeCounter() {
+      var current = 1;
+      return function() {return current++;};
+    }
+var counter = makeCounter();
 
-function showItems() {
+function showItems(counter) {
     var reSearch = document.body.getElementsByClassName('container');
-    var widthClient = 0.9*document.documentElement.clientWidth;
+    var widthClient = counter()*0.9*document.documentElement.clientWidth;
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 
 }
@@ -132,8 +137,8 @@ var container = document.createElement('div');
     document.body.appendChild(buttonNext);
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
-      showItems();
-      event.preventDefault();
+      showItems(counter);
+    //  event.preventDefault();
     });
 
 }
