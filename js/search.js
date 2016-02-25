@@ -57,7 +57,7 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
 
 
 
-function showItems() {
+function showItemsNext() {
     for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left>document.documentElement.clientWidth*0.9){var next = i; break;}};
     var reSearch = document.body.getElementsByClassName('container');
     nCol = (document.documentElement.clientWidth - (document.documentElement.clientWidth % 300))/300;
@@ -65,6 +65,16 @@ function showItems() {
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 
 }
+
+function showItemsPrevious() {
+    for (var i=(document.getElementsByClassName('container')[1].childNodes.length)-1; i>0; i--){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left < 0){var previous = i-1; break;}};
+    var reSearch = document.body.getElementsByClassName('container');
+    nCol = (document.documentElement.clientWidth - (document.documentElement.clientWidth % 300))/300;
+    var widthClient = previous*0.9*document.documentElement.clientWidth/nCol;
+      reSearch[1].style.transform = 'translate(+' + widthClient + 'px)';
+
+}
+
 
 function showResponse(elements) {
     
@@ -135,7 +145,26 @@ var container = document.createElement('div');
     document.body.appendChild(buttonNext);
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
-      showItems();
+      showItemsNext();
+    //  event.preventDefault();
+    });
+
+    var buttonPrevious = document.createElement('button');
+    buttonPrevious.id = 'buttonPrevious';
+    buttonPrevious.innerHTML = 'Назад';
+    buttonPrevious.style = 'position: relative; margin-left: 20px;'
+
+
+
+    document.body.appendChild(buttonPrevious);
+
+    document.getElementById("buttonNext").addEventListener("click", function(event) {
+      showItemsNext();
+    //  event.preventDefault();
+    });
+
+    document.getElementById("buttonPrevious").addEventListener("click", function(event) {
+      showItemsPrevious();
     //  event.preventDefault();
     });
 
