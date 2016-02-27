@@ -40,8 +40,56 @@ document.body.appendChild(main);
 
 })()
 
-document.getElementById('search').focus();
+function slider () {
+    var sliderElem = document.getElementsByTagName("article")[0];
+    var thumbElem = sliderElem.children[0];
 
+    thumbElem.onmousedown = function(e) {
+      var thumbCoords = getCoords(thumbElem);
+      var shiftX = e.pageX - thumbCoords.left;
+      // shiftY здесь не нужен, слайдер двигается только по горизонтали
+
+      var sliderCoords = getCoords(sliderElem);
+
+      document.onmousemove = function(e) {
+        //  вычесть координату родителя, т.к. position: relative
+        var newLeft = e.pageX - shiftX - sliderCoords.left;
+
+        // курсор ушёл вне слайдера
+        if (newLeft < 0) {
+          newLeft = 0;
+        }
+        var rightEdge = sliderElem.offsetWidth - thumbElem.offsetWidth;
+        if (newLeft > rightEdge) {
+          newLeft = rightEdge;
+        }
+
+        thumbElem.style.left = newLeft + 'px';
+      }
+
+      document.onmouseup = function() {
+        document.onmousemove = document.onmouseup = null;
+      };
+
+      return false; // disable selection start (cursor change)
+    };
+
+    thumbElem.ondragstart = function() {
+      return false;
+    };
+
+    function getCoords(elem) { 
+      var box = elem.getBoundingClientRect();
+
+      return {
+        top: box.top + pageYOffset,
+        left: box.left + pageXOffset
+      };
+
+    }
+}
+
+document.getElementById('search').focus();
 
 
 document.getElementById("search").addEventListener("keydown", function(event) {
@@ -67,11 +115,11 @@ function showItemsNext() {
 }
 
 function showItemsPrevious() {
-    for (var i=(document.getElementsByClassName('container')[1].childNodes.length)-1; i>0; i--){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left < 0){var previous = i-1; break;}};
+    for (var i=(document.getElementsByClassName('container')[1].childNodes.length)-1; i>=0; i--){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left < 0){var previous = i+1; break;}};
     var reSearch = document.body.getElementsByClassName('container');
     nCol = (document.documentElement.clientWidth - (document.documentElement.clientWidth % 300))/300;
-    var widthClient = previous*0.9*document.documentElement.clientWidth/nCol;
-      reSearch[1].style.transform = 'translate(+' + widthClient + 'px)';
+    var widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
+      reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 
 }
 
@@ -85,7 +133,7 @@ var container = document.createElement('div');
  // container.style.width = 300 + '%';
   
   
-  for (var i=0; i<15; i++){
+  for (var i=0; i<elements.items.length; i++){
     var galleryItem = document.createElement('div');
     galleryItem.className = 'galleryItem';
     container.appendChild(galleryItem);
@@ -97,7 +145,7 @@ var container = document.createElement('div');
     if (widthItem<300) {widthItem = 300};
     galleryItem.style.width = (widthItem) + 'px'; 
 
-    var a = document.createElement('a');
+    var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
     a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
     galleryItem.appendChild(a);
 
@@ -140,13 +188,10 @@ var container = document.createElement('div');
     buttonNext.innerHTML = 'Далее';
     buttonNext.style = 'position: relative; left: 100%; margin-left: -80px;'
 
-
-
     document.body.appendChild(buttonNext);
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
       showItemsNext();
-    //  event.preventDefault();
     });
 
     var buttonPrevious = document.createElement('button');
@@ -154,23 +199,29 @@ var container = document.createElement('div');
     buttonPrevious.innerHTML = 'Назад';
     buttonPrevious.style = 'position: relative; margin-left: 20px;'
 
-
-
     document.body.appendChild(buttonPrevious);
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
       showItemsNext();
-    //  event.preventDefault();
     });
 
     document.getElementById("buttonPrevious").addEventListener("click", function(event) {
       showItemsPrevious();
-    //  event.preventDefault();
     });
+
+    //slider();
 
 }
 
 function onClientLoad() {
+    if (document.querySelector('article')!=null) {
+        var removeArticle = document.querySelector('article');
+        var removeBottons = document.querySelectorAll('button');
+        removeArticle.parentNode.removeChild(removeArticle);
+        removeBottons[2].parentNode.removeChild(removeBottons[2]);
+        removeBottons[1].parentNode.removeChild(removeBottons[1]);
+};
+    
     gapi.client.load('youtube', 'v3', onYouTubeApiLoad);
 }
 
