@@ -41,52 +41,22 @@ document.body.appendChild(main);
 })()
 
 function slider () {
-    var sliderElem = document.getElementsByTagName("article")[0];
-    var thumbElem = sliderElem.children[0];
 
-    thumbElem.onmousedown = function(e) {
-      var thumbCoords = getCoords(thumbElem);
-      var shiftX = e.pageX - thumbCoords.left;
-      // shiftY здесь не нужен, слайдер двигается только по горизонтали
-
-      var sliderCoords = getCoords(sliderElem);
-
-      document.onmousemove = function(e) {
-        //  вычесть координату родителя, т.к. position: relative
-        var newLeft = e.pageX - shiftX - sliderCoords.left;
-
-        // курсор ушёл вне слайдера
-        if (newLeft < 0) {
-          newLeft = 0;
+    var slider = document.body;
+    slider.onmousedown = function(event){
+        var shiftX = event.clientX;
+        slider.onmouseup = function(event){
+            var upX = event.clientX;
+            if ((shiftX-upX)>100){
+                showItemsNext();
+            } else if ((shiftX-upX)<-100){
+                showItemsPrevious();
+            }
         }
-        var rightEdge = sliderElem.offsetWidth - thumbElem.offsetWidth;
-        if (newLeft > rightEdge) {
-          newLeft = rightEdge;
-        }
-
-        thumbElem.style.left = newLeft + 'px';
-      }
-
-      document.onmouseup = function() {
-        document.onmousemove = document.onmouseup = null;
-      };
-
-      return false; // disable selection start (cursor change)
-    };
-
-    thumbElem.ondragstart = function() {
+    }
+    slider.ondragstart = function() {
       return false;
     };
-
-    function getCoords(elem) { 
-      var box = elem.getBoundingClientRect();
-
-      return {
-        top: box.top + pageYOffset,
-        left: box.left + pageXOffset
-      };
-
-    }
 }
 
 document.getElementById('search').focus();
@@ -100,6 +70,7 @@ document.getElementById("search").addEventListener("keydown", function(event) {
 });
 document.getElementById("buttonSearch").addEventListener("click", function() {
       onClientLoad();
+      event.slider();
     });
 
 
@@ -108,7 +79,7 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
 function showItemsNext() {
     for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left>document.documentElement.clientWidth*0.9){var next = i; break;}};
     var reSearch = document.body.getElementsByClassName('container');
-    nCol = (document.documentElement.clientWidth - (document.documentElement.clientWidth % 300))/300;
+    nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
     var widthClient = next*0.9*document.documentElement.clientWidth/nCol;
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 
@@ -117,7 +88,7 @@ function showItemsNext() {
 function showItemsPrevious() {
     for (var i=(document.getElementsByClassName('container')[1].childNodes.length)-1; i>=0; i--){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left < 0){var previous = i+1; break;}};
     var reSearch = document.body.getElementsByClassName('container');
-    nCol = (document.documentElement.clientWidth - (document.documentElement.clientWidth % 300))/300;
+    nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
     var widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 
@@ -128,6 +99,8 @@ function showResponse(elements) {
     
 
 var article = document.createElement('article');
+var teil = document.createElement('div');
+    teil.className = 'teil';
 var container = document.createElement('div');
   container.className = 'container';
  // container.style.width = 300 + '%';
@@ -180,7 +153,8 @@ var container = document.createElement('div');
     galleryItem.appendChild(h6);
     
   }
-  article.appendChild(container);
+  teil.appendChild(container);
+  article.appendChild(teil);
   document.body.appendChild(article)
 
   var buttonNext = document.createElement('button');
@@ -209,7 +183,7 @@ var container = document.createElement('div');
       showItemsPrevious();
     });
 
-    //slider();
+    slider();
 
 }
 
