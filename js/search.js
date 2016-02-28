@@ -70,7 +70,6 @@ document.getElementById("search").addEventListener("keydown", function(event) {
 });
 document.getElementById("buttonSearch").addEventListener("click", function() {
       onClientLoad();
-      event.slider();
     });
 
 
@@ -82,7 +81,6 @@ function showItemsNext() {
     nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
     var widthClient = next*0.9*document.documentElement.clientWidth/nCol;
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
-
 }
 
 function showItemsPrevious() {
@@ -91,7 +89,6 @@ function showItemsPrevious() {
     nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
     var widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
-
 }
 
 
