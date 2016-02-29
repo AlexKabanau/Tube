@@ -1,18 +1,4 @@
-/*var form = document.querySelector("form");
-  form.addEventListener("submit", function(event) {
-    onClientLoad();
-    event.preventDefault();
-  });
 
-
-  function showNewItems () {
-    var addTransform = document.body.getElementsByClassName('container');
-      addTransform[1].style.transform = 'translate(-450px)';
-document.getElementById("buttonReSearch").addEventListener("click", function() {
-    window.onload = showNewItems();
-    
- });
-*/
 (function addElements(){
 
 var main = document.createElement('main');
@@ -102,18 +88,26 @@ var container = document.createElement('div');
   container.className = 'container';
  // container.style.width = 300 + '%';
   
-  
-  for (var i=0; i<elements.items.length; i++){
-    var galleryItem = document.createElement('div');
-    galleryItem.className = 'galleryItem';
-    container.appendChild(galleryItem);
     ////////style();////////
     var widthClient = 0.9*document.documentElement.clientWidth;
+    window.onresize = function ()
+{
+    alert('Размер окна был изменен!');
+    widthClient = 0.9*document.documentElement.clientWidth;
+}
     var nCol = (widthClient - (widthClient % 300))/300;/*nunmer of column*/
     if (nCol>5) {nCol = 5};
     var widthItem = widthClient/(nCol) - 3*2/**/;/*6=3px*2padding*/
     if (widthItem<300) {widthItem = 300};
-    galleryItem.style.width = (widthItem) + 'px'; 
+  
+  
+  for (var i=0; i<elements.items.length; i++){
+    var galleryItem = document.createElement('div');
+    galleryItem.className = 'galleryItem';
+    galleryItem.style.width = (widthItem) + 'px';
+    container.appendChild(galleryItem);
+
+     
 
     var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
     a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
