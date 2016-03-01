@@ -77,38 +77,43 @@ function showItemsPrevious() {
       reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 }
 
+function widthClientWindow () {
+    var widthClient = 0.9*document.documentElement.clientWidth;
+    nCol = (widthClient - (widthClient % 300))/300;/*number of column*/
+    if (nCol > 5) {nCol = 5};
+    widthItem = widthClient/(nCol)-3*2/**/;/*6=3px*2padding*/
+    if (widthItem < 300) {
+        nCol = nCol - 1;
+        widthItem = widthClient/(nCol)-3*2;
+    };
+    //!!!!!!!!!!style!!!!!!!//
+}
 
 function showResponse(elements) {
     
 
 var article = document.createElement('article');
-var teil = document.createElement('div');
-    teil.className = 'teil';
+
 var container = document.createElement('div');
-  container.className = 'container';
- // container.style.width = 300 + '%';
+    container.className = 'container';
+var fragment = document.createDocumentFragment()
+ 
   
-    ////////style();////////
-    var widthClient = 0.9*document.documentElement.clientWidth;
-    window.onresize = function ()
+    
+    
+
+  widthClientWindow();
+  window.onresize = function ()
 {
     alert('Размер окна был изменен!');
-    widthClient = 0.9*document.documentElement.clientWidth;
-}
-    var nCol = (widthClient - (widthClient % 300))/300;/*nunmer of column*/
-    if (nCol>5) {nCol = 5};
-    var widthItem = widthClient/(nCol) - 3*2/**/;/*6=3px*2padding*/
-    if (widthItem<300) {widthItem = 300};
-  
-  
+    widthClientWindow();
+}   
   for (var i=0; i<elements.items.length; i++){
     var galleryItem = document.createElement('div');
     galleryItem.className = 'galleryItem';
     galleryItem.style.width = (widthItem) + 'px';
-    container.appendChild(galleryItem);
-
-     
-
+    fragment.appendChild(galleryItem);
+    
     var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
     a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
     galleryItem.appendChild(a);
@@ -144,8 +149,8 @@ var container = document.createElement('div');
     galleryItem.appendChild(h6);
     
   }
-  teil.appendChild(container);
-  article.appendChild(teil);
+  container.appendChild(fragment);
+  article.appendChild(container);
   document.body.appendChild(article)
 
   var buttonNext = document.createElement('button');
