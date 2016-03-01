@@ -109,6 +109,38 @@ article .container {
   text-overflow: ellipsis;
 }
 
+input[type=radio] {
+    display: none;
+}
+
+.slider-controls {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    text-align: center;
+}
+
+.slider-controls label {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 3px;
+    background: #ccc;
+    cursor: pointer;   
+    border: 4px solid white;
+    border-radius: 50%;    
+    box-shadow: 0px 0px 2px rgba(0,0,0,.8);     
+    transition: background-color .2s;
+}
+
+#btn-1:checked ~ .slider-controls label[for="btn-1"],
+#btn-2:checked ~ .slider-controls label[for="btn-2"],
+#btn-3:checked ~ .slider-controls label[for="btn-3"] { 
+    background-color: #666;
+}
+
 
 /* MМЕДИА ЗАПРОСЫ*/
 /*@media only screen and (max-width : 940px),

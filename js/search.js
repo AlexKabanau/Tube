@@ -62,19 +62,29 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
 
 
 function showItemsNext() {
-    for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left>document.documentElement.clientWidth*0.9){var next = i; break;}};
+    for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++) {
+        var elementes = document.getElementsByClassName('galleryItem');
+        if (elementes[i].getBoundingClientRect().left>document.documentElement.clientWidth*0.9) {
+            var next = i; break;
+        }
+    };
     var reSearch = document.body.getElementsByClassName('container');
     nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
     var widthClient = next*0.9*document.documentElement.clientWidth/nCol;
-      reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
+    reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 }
 
 function showItemsPrevious() {
-    for (var i=(document.getElementsByClassName('container')[1].childNodes.length)-1; i>=0; i--){var elementes = document.getElementsByClassName('galleryItem'); if (elementes[i].getBoundingClientRect().left < 0){var previous = i+1; break;}};
+    for (var i=(document.getElementsByClassName('container')[1].childNodes.length)-1; i>=0; i--) {
+        var elementes = document.getElementsByClassName('galleryItem'); 
+        if (elementes[i].getBoundingClientRect().left < 0) {
+            var previous = i+1; break;
+        }
+    };
     var reSearch = document.body.getElementsByClassName('container');
     nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
     var widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
-      reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
+    reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 }
 
 function widthClientWindow () {
@@ -86,28 +96,27 @@ function widthClientWindow () {
         nCol = nCol - 1;
         widthItem = widthClient/(nCol)-3*2;
     };
-    //!!!!!!!!!!style!!!!!!!//
 }
 
 function showResponse(elements) {
     
-
 var article = document.createElement('article');
 
 var container = document.createElement('div');
     container.className = 'container';
-var fragment = document.createDocumentFragment()
+var fragment = document.createDocumentFragment();
  
-  
-    
-    
+widthClientWindow();
 
-  widthClientWindow();
-  window.onresize = function ()
-{
-    alert('Размер окна был изменен!');
+window.onresize = function() {   
+    //alert('Размер окна был изменен!');
     widthClientWindow();
-}   
+    var galleryItem = document.getElementsByClassName('galleryItem');
+    for (var i=0; i<elements.items.length; i++){
+        galleryItem[i].style.width = (widthItem) + 'px';
+    };
+};
+
   for (var i=0; i<elements.items.length; i++){
     var galleryItem = document.createElement('div');
     galleryItem.className = 'galleryItem';
@@ -156,7 +165,7 @@ var fragment = document.createDocumentFragment()
   var buttonNext = document.createElement('button');
     buttonNext.id = 'buttonNext';
     buttonNext.innerHTML = 'Далее';
-    buttonNext.style = 'position: relative; left: 100%; margin-left: -80px;'
+    buttonNext.style = 'position: relative; left: 100%; top: 27px; margin-left: -80px;'
 
     document.body.appendChild(buttonNext);
 
@@ -167,9 +176,33 @@ var fragment = document.createDocumentFragment()
     var buttonPrevious = document.createElement('button');
     buttonPrevious.id = 'buttonPrevious';
     buttonPrevious.innerHTML = 'Назад';
-    buttonPrevious.style = 'position: relative; margin-left: 20px;'
+    buttonPrevious.style = 'position: relative; margin-left: 20px; top: 27px;'
 
     document.body.appendChild(buttonPrevious);
+
+    /*document.getElementById("red").checked = true;*/
+    var fragmentRadio = document.createDocumentFragment();
+    widthClientWindow();
+    numberInput = (elements.items.length)/nCol;
+    for (var i = 0; i < numberInput; i++) {
+        var radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.id = 'btn-'+ (i+1);
+        radio.name = 'toggle';
+        fragmentRadio.appendChild(radio);
+    }
+    var sliderControls = document.createElement('div');
+        sliderControls.className = 'slider-controls';
+
+    for (i = 0; i < numberInput; i++) {
+        var label = document.createElement('label');
+            label.htmlFor = 'btn-'+(i+1);
+        sliderControls.appendChild(label);
+    }
+    fragmentRadio.appendChild(sliderControls);
+
+    document.body.appendChild(fragmentRadio);
+
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
       showItemsNext();
@@ -179,7 +212,7 @@ var fragment = document.createDocumentFragment()
       showItemsPrevious();
     });
 
-    slider();
+    
 
 }
 
