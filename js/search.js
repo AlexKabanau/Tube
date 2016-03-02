@@ -188,7 +188,7 @@ window.onresize = function() {
     for (var i = 0; i < numberInput; i++) {
         var radio = document.createElement('input');
         radio.type = 'radio';
-        radio.id = 'btn-'+ (i+1);
+        radio.id = 'btn-'+ i;
         radio.name = 'toggle';
         fragmentRadio.appendChild(radio);
     }
@@ -197,13 +197,21 @@ window.onresize = function() {
 
     for (i = 0; i < numberInput; i++) {
         var label = document.createElement('label');
-            label.htmlFor = 'btn-'+(i+1);
+            label.htmlFor = 'btn-'+ i;
+
         sliderControls.appendChild(label);
     }
     fragmentRadio.appendChild(sliderControls);
 
     document.body.appendChild(fragmentRadio);
 
+    for (i = 0; i < numberInput; i++) {
+    document.getElementsByTagName('label')[i].addEventListener('click', function () {
+            k=i;
+            (function(k){
+                alert('hello '+k);
+            })();});
+    }
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
       showItemsNext();

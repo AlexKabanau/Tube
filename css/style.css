@@ -126,7 +126,7 @@ input[type=radio] {
     display: inline-block;
     width: 8px;
     height: 8px;
-    margin: 0 3px;
+    margin: 0 2px;
     background: #ccc;
     cursor: pointer;   
     border: 3px solid white;
@@ -135,7 +135,11 @@ input[type=radio] {
     transition: background-color .2s;
 }
 
-#btn-1:checked ~ .slider-controls label[for="btn-1"],
+label {
+  background-color: #666;
+}
+
+/*#btn-1:checked ~ .slider-controls label[for="btn-1"],
 #btn-2:checked ~ .slider-controls label[for="btn-2"],
 #btn-3:checked ~ .slider-controls label[for="btn-3"] { 
     background-color: #666;
