@@ -26,9 +26,9 @@ document.body.appendChild(main);
 
 })()
 
-function slider () {
+function slider() {
 
-    var slider = document.body;
+    var slider = document;
     slider.onmousedown = function(event){
         var shiftX = event.clientX;
         slider.onmouseup = function(event){
@@ -68,22 +68,23 @@ function showItemsNext() {
             var next = i; break;
         }
     };
+    widthClientWindow();
+
     var reSearch = document.body.getElementsByClassName('container');
-    nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
-    var widthClient = next*0.9*document.documentElement.clientWidth/nCol;
+    widthClient = next*0.9*document.documentElement.clientWidth/nCol;
     reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 }
 
 function showItemsPrevious() {
-    for (var i=(document.getElementsByClassName('container')[1].childNodes.length)-1; i>=0; i--) {
+    for (var i=document.getElementsByClassName('container')[1].childNodes.length-1; i>=0; i--) {
         var elementes = document.getElementsByClassName('galleryItem'); 
         if (elementes[i].getBoundingClientRect().left < 0) {
             var previous = i+1; break;
         }
     };
+    widthClientWindow();
     var reSearch = document.body.getElementsByClassName('container');
-    nCol = (0.9*document.documentElement.clientWidth - (0.9*document.documentElement.clientWidth % 300))/300;
-    var widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
+    widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
     reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
 }
 
@@ -212,17 +213,28 @@ window.onresize = function() {
       showItemsPrevious();
     });
 
-    
+    slider();
 
 }
 
 function onClientLoad() {
     if (document.querySelector('article')!=null) {
         var removeArticle = document.querySelector('article');
-        var removeBottons = document.querySelectorAll('button');
+        var removeButtons = document.querySelectorAll('button');
+        var removeRadio = document.querySelectorAll('[name=toggle]');
+        var removeLabel = document.querySelectorAll('label');
+
+        for (var i = 0; i < removeRadio.length; i++) {
+            removeRadio[i].parentNode.removeChild(removeRadio[i]);
+        };
+
+        for (var i = 0; i < removeLabel.length; i++) {
+            removeLabel[i].parentNode.removeChild(removeLabel[i]);
+        };
+
         removeArticle.parentNode.removeChild(removeArticle);
-        removeBottons[2].parentNode.removeChild(removeBottons[2]);
-        removeBottons[1].parentNode.removeChild(removeBottons[1]);
+        removeButtons[2].parentNode.removeChild(removeButtons[2]);
+        removeButtons[1].parentNode.removeChild(removeButtons[1]);
 };
     
     gapi.client.load('youtube', 'v3', onYouTubeApiLoad);
