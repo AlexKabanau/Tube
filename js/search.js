@@ -155,7 +155,7 @@ window.onresize = function() {
     
     var h6 = document.createElement('h6');
     h6.class = 'likeCount';
-    h6.innerHTML = 'Liks: '+elements.items[i].statistics.likeCount;
+    h6.innerHTML = 'Likes: '+elements.items[i].statistics.likeCount;
     galleryItem.appendChild(h6);
     
   }
@@ -201,9 +201,11 @@ window.onresize = function() {
 
         sliderControls.appendChild(label);
     }
+
     fragmentRadio.appendChild(sliderControls);
 
     document.body.appendChild(fragmentRadio);
+
 
     labels = document.getElementsByTagName('label');
     for (i = 0; i < numberInput; i++) {
@@ -211,13 +213,18 @@ window.onresize = function() {
         function labelClick(arg) {
             labels[arg].addEventListener('click', function () {
                 widthClientWindow();
+                for (j=0; j<numberInput; j++) {
+                    document.querySelector('.slider-controls').querySelector('label[for="btn-'+ j + '"]').style.background = '#ccc';
+                }
                 document.querySelector('.slider-controls').querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
                 document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
-                }, false 
+                } 
             );
         };
         labelClick(i);
     }
+
+    document.querySelector('.slider-controls').querySelector('label[for="btn-0"]').style.background = '#666';
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {
       showItemsNext();
