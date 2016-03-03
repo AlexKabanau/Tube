@@ -89,7 +89,7 @@ function showItemsPrevious() {
 }
 
 function widthClientWindow () {
-    var widthClient = 0.9*document.documentElement.clientWidth;
+    widthClient = 0.9*document.documentElement.clientWidth;
     nCol = (widthClient - (widthClient % 300))/300;/*number of column*/
     if (nCol > 5) {nCol = 5};
     widthItem = widthClient/(nCol)-3*2/**/;/*6=3px*2padding*/
@@ -205,12 +205,18 @@ window.onresize = function() {
 
     document.body.appendChild(fragmentRadio);
 
+    labels = document.getElementsByTagName('label');
     for (i = 0; i < numberInput; i++) {
-    document.getElementsByTagName('label')[i].addEventListener('click', function () {
-            k=i;
-            (function(k){
-                alert('hello '+k);
-            })();});
+    
+        function labelClick(arg) {
+            labels[arg].addEventListener('click', function () {
+                widthClientWindow();
+                document.querySelector('.slider-controls').querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
+                document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
+                }, false 
+            );
+        };
+        labelClick(i);
     }
 
     document.getElementById("buttonNext").addEventListener("click", function(event) {

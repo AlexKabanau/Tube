@@ -134,39 +134,3 @@ input[type=radio] {
     box-shadow: 0px 0px 2px rgba(0,0,0,.8);     
     transition: background-color .2s;
 }
-
-label {
-  background-color: #666;
-}
-
-/*#btn-1:checked ~ .slider-controls label[for="btn-1"],
-#btn-2:checked ~ .slider-controls label[for="btn-2"],
-#btn-3:checked ~ .slider-controls label[for="btn-3"] { 
-    background-color: #666;
-}
-
-
-/* MМЕДИА ЗАПРОСЫ*/
-/*@media only screen and (max-width : 940px),
-only screen and (max-device-width : 940px){
-  .galleryItem {width: 21%;}
-}
- 
-@media only screen and (max-width : 720px),
-only screen and (max-device-width : 720px){
-  .galleryItem {width: 29.33333%;}
-}
- 
-@media only screen and (max-width : 530px),
-only screen and (max-device-width : 530px){
-  .galleryItem {width: 46%;}
-}
- 
-@media only screen and (max-width : 320px),
-only screen and (max-device-width : 320px){
-  .galleryItem {width: 96%;}
-  .galleryItem img {width: 96%;}
-  .galleryItem h3 {font-size: 18px;}
-  .galleryItem p, {font-size: 18px;}
-}
-*/
