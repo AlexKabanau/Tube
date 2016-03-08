@@ -1,49 +1,32 @@
 
 (function addElements(){
 
-var main = document.createElement('main');
+    var main = document.createElement('main');
 
 
-var container = document.createElement('div');
-    container.className = 'container';
-var inputSearch = document.createElement('input');
-    inputSearch.id = 'search';
-    inputSearch.type = 'search';
-    inputSearch.setAttribute('value', '');
-    inputSearch.placeholder = "Я ищу...";
-    
-    container.appendChild(inputSearch);
+    var container = document.createElement('div');
+        container.className = 'container';
+    var inputSearch = document.createElement('input');
+        inputSearch.id = 'search';
+        inputSearch.type = 'search';
+        inputSearch.setAttribute('value', '');
+        inputSearch.placeholder = "Я ищу...";
+        
+        container.appendChild(inputSearch);
 
-var buttonSearch = document.createElement('button');
-    buttonSearch.id = 'buttonSearch';
-    buttonSearch.innerHTML = 'Поиск';
+    var buttonSearch = document.createElement('button');
+        buttonSearch.id = 'buttonSearch';
+        buttonSearch.innerHTML = 'Поиск';
 
-    container.appendChild(buttonSearch);
+        container.appendChild(buttonSearch);
 
-main.appendChild(container);
+    main.appendChild(container);
 
-document.body.appendChild(main);
+    document.body.appendChild(main);
 
 })()
 
-function slider() {
 
-    var slider = document;
-    slider.onmousedown = function(event){
-        var shiftX = event.clientX;
-        slider.onmouseup = function(event){
-            var upX = event.clientX;
-            if ((shiftX-upX)>100){
-                showItemsNext();
-            } else if ((shiftX-upX)<-100){
-                showItemsPrevious();
-            }
-        }
-    }
-    slider.ondragstart = function() {
-      return false;
-    };
-}
 
 document.getElementById('search').focus();
 
@@ -70,9 +53,9 @@ function showItemsNext() {
     };
     widthClientWindow();
 
-    var reSearch = document.body.getElementsByClassName('container');
+    var container = document.body.getElementsByClassName('container');
     widthClient = next*0.9*document.documentElement.clientWidth/nCol;
-    reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
+    container[1].style.transform = 'translate(-' + widthClient + 'px)';
 }
 
 function showItemsPrevious() {
@@ -83,9 +66,9 @@ function showItemsPrevious() {
         }
     };
     widthClientWindow();
-    var reSearch = document.body.getElementsByClassName('container');
+    var container = document.body.getElementsByClassName('container');
     widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
-    reSearch[1].style.transform = 'translate(-' + widthClient + 'px)';
+    container[1].style.transform = 'translate(-' + widthClient + 'px)';
 }
 
 function widthClientWindow () {
@@ -101,87 +84,133 @@ function widthClientWindow () {
 
 function showResponse(elements) {
     
-var article = document.createElement('article');
+    var article = document.createElement('article');
 
-var container = document.createElement('div');
-    container.className = 'container';
-var fragment = document.createDocumentFragment();
- 
-widthClientWindow();
-
-window.onresize = function() {   
-    //alert('Размер окна был изменен!');
+    var container = document.createElement('div');
+        container.className = 'container';
+    var fragment = document.createDocumentFragment();
+     
     widthClientWindow();
-    var galleryItem = document.getElementsByClassName('galleryItem');
-    for (var i=0; i<elements.items.length; i++){
-        galleryItem[i].style.width = (widthItem) + 'px';
+
+    window.onresize = function() {   
+        //alert('Размер окна был изменен!');
+        widthClientWindow();
+        var galleryItem = document.getElementsByClassName('galleryItem');
+        for (var i=0; i<elements.items.length; i++){
+            galleryItem[i].style.width = (widthItem) + 'px';
+        };
     };
-};
 
-  for (var i=0; i<elements.items.length; i++){
-    var galleryItem = document.createElement('div');
-    galleryItem.className = 'galleryItem';
-    galleryItem.style.width = (widthItem) + 'px';
-    fragment.appendChild(galleryItem);
-    
-    var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
-    a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
-    galleryItem.appendChild(a);
+      for (var i=0; i<elements.items.length; i++){
+        var galleryItem = document.createElement('div');
+        galleryItem.className = 'galleryItem';
+        galleryItem.style.width = (widthItem) + 'px';
+        fragment.appendChild(galleryItem);
+        
+        var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
+        a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
+        galleryItem.appendChild(a);
 
-    var h4 = document.createElement('h4');
-    h4.innerHTML = elements.items[i].snippet.title;
-    a.appendChild(h4);
+        var h4 = document.createElement('h4');
+        h4.innerHTML = elements.items[i].snippet.title;
+        a.appendChild(h4);
 
-    var img = document.createElement('img');
-    img.src = elements.items[i].snippet.thumbnails.high.url;
-    a.appendChild(img); 
+        var img = document.createElement('img');
+        img.src = elements.items[i].snippet.thumbnails.high.url;
+        a.appendChild(img); 
 
-    var p = document.createElement('p');
-    p.innerHTML = elements.items[i].snippet.description;
-    galleryItem.appendChild(p); 
+        var p = document.createElement('p');
+        p.innerHTML = elements.items[i].snippet.description;
+        galleryItem.appendChild(p); 
 
-    var aChanel = document.createElement('a');
-    aChanel.href = 'http://www.youtube.com/channel/'+elements.items[i].snippet.channelId;
-    galleryItem.appendChild(aChanel);
+        var aChanel = document.createElement('a');
+        aChanel.href = 'http://www.youtube.com/channel/'+elements.items[i].snippet.channelId;
+        galleryItem.appendChild(aChanel);
 
-    var h5 = document.createElement('h5');
-    h5.innerHTML = elements.items[i].snippet.channelTitle;
-    aChanel.appendChild(h5);
+        var h5 = document.createElement('h5');
+        h5.innerHTML = elements.items[i].snippet.channelTitle;
+        aChanel.appendChild(h5);
 
-    var h5 = document.createElement('h5');
-    h5.class = 'viewCount';
-    h5.innerHTML = 'Просмотров: '+elements.items[i].statistics.viewCount;
-    galleryItem.appendChild(h5);
-    
-    var h6 = document.createElement('h6');
-    h6.class = 'likeCount';
-    h6.innerHTML = 'Likes: '+elements.items[i].statistics.likeCount;
-    galleryItem.appendChild(h6);
-    
-  }
-  container.appendChild(fragment);
-  article.appendChild(container);
-  document.body.appendChild(article)
+        var h5 = document.createElement('h5');
+        h5.class = 'viewCount';
+        h5.innerHTML = 'Просмотров: '+elements.items[i].statistics.viewCount;
+        galleryItem.appendChild(h5);
+        
+        var h6 = document.createElement('h6');
+        h6.class = 'likeCount';
+        h6.innerHTML = 'Likes: '+elements.items[i].statistics.likeCount;
+        galleryItem.appendChild(h6);
+        
+      }
+      container.appendChild(fragment);
+      article.appendChild(container);
+      document.body.appendChild(article)
 
-  var buttonNext = document.createElement('button');
-    buttonNext.id = 'buttonNext';
-    buttonNext.innerHTML = 'Далее';
-    buttonNext.style = 'position: relative; left: 100%; top: 27px; margin-left: -80px;'
+      var buttonNext = document.createElement('button');
+        buttonNext.id = 'buttonNext';
+        buttonNext.innerHTML = 'Далее';
+        buttonNext.style = 'position: relative; left: 100%; top: 27px; margin-left: -80px;'
 
-    document.body.appendChild(buttonNext);
+        document.body.appendChild(buttonNext);
 
-    document.getElementById("buttonNext").addEventListener("click", function(event) {
-      showItemsNext();
-    });
+        document.getElementById("buttonNext").addEventListener("click", function(event) {
+          showItemsNext();
+        });
 
-    var buttonPrevious = document.createElement('button');
-    buttonPrevious.id = 'buttonPrevious';
-    buttonPrevious.innerHTML = 'Назад';
-    buttonPrevious.style = 'position: relative; margin-left: 20px; top: 27px;'
+        var buttonPrevious = document.createElement('button');
+        buttonPrevious.id = 'buttonPrevious';
+        buttonPrevious.innerHTML = 'Назад';
+        buttonPrevious.style = 'position: relative; margin-left: 20px; top: 27px;'
 
-    document.body.appendChild(buttonPrevious);
+        document.body.appendChild(buttonPrevious);
 
-    /*document.getElementById("red").checked = true;*/
+        addLabels(elements);
+        //addLabelClick(elements);
+     /*   window.onresize = function(elements) {
+            removeElements('[name=toggle]');
+            removeElements('label');
+
+            addLabels(elements);
+        };
+
+        
+
+        */
+
+        document.querySelector('.slider-controls').querySelector('label[for="btn-0"]').style.background = '#666';
+
+        document.getElementById("buttonNext").addEventListener("click", function(event) {
+          showItemsNext();
+        });
+
+        document.getElementById("buttonPrevious").addEventListener("click", function(event) {
+          showItemsPrevious();
+        });
+
+        slider();
+
+}
+
+function slider() {
+
+    var slider = document;
+    slider.onmousedown = function(event){
+        var shiftX = event.clientX;
+        slider.onmouseup = function(event){
+            var upX = event.clientX;
+            if ((shiftX-upX)>100){
+                showItemsNext();
+            } else if ((shiftX-upX)<-100){
+                showItemsPrevious();
+            }
+        }
+    }
+    slider.ondragstart = function() {
+      return false;
+    };
+}
+
+function addLabels(elements){
     var fragmentRadio = document.createDocumentFragment();
     widthClientWindow();
     numberInput = (elements.items.length)/nCol;
@@ -205,58 +234,48 @@ window.onresize = function() {
     fragmentRadio.appendChild(sliderControls);
 
     document.body.appendChild(fragmentRadio);
+    addLabelClick(elements);
+}
 
-
+function addLabelClick(elements){
+    widthClientWindow();
+    numberInput = (elements.items.length)/nCol;
     labels = document.getElementsByTagName('label');
-    for (i = 0; i < numberInput; i++) {
-    
-        function labelClick(arg) {
-            labels[arg].addEventListener('click', function () {
-                widthClientWindow();
-                for (j=0; j<numberInput; j++) {
-                    document.querySelector('.slider-controls').querySelector('label[for="btn-'+ j + '"]').style.background = '#ccc';
-                }
-                document.querySelector('.slider-controls').querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
-                document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
-                } 
-            );
-        };
-        labelClick(i);
+        for (i = 0; i < numberInput; i++) {
+            function labelClick(arg) {
+                labels[arg].addEventListener('click', function () {
+                    for (j=0; j<numberInput; j++) {
+                        document.querySelector('.slider-controls').querySelector('label[for="btn-'+ j + '"]').style.background = '#ccc';
+                    }
+                    document.querySelector('.slider-controls').querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
+                    document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
+                });
+            };
+            labelClick(i);
+        }
+}
+
+
+
+function removeElements(element){
+
+    var removeElem = document.querySelectorAll(element);
+    var lengthElem = removeElem.length;
+    var i=0;
+    if (element == 'button'){ i=1; };
+    for (i; i<lengthElem; i++){
+        removeElem[i].parentNode.removeChild(removeElem[i]);
     }
-
-    document.querySelector('.slider-controls').querySelector('label[for="btn-0"]').style.background = '#666';
-
-    document.getElementById("buttonNext").addEventListener("click", function(event) {
-      showItemsNext();
-    });
-
-    document.getElementById("buttonPrevious").addEventListener("click", function(event) {
-      showItemsPrevious();
-    });
-
-    slider();
-
 }
 
 function onClientLoad() {
+
     if (document.querySelector('article')!=null) {
-        var removeArticle = document.querySelector('article');
-        var removeButtons = document.querySelectorAll('button');
-        var removeRadio = document.querySelectorAll('[name=toggle]');
-        var removeLabel = document.querySelectorAll('label');
-
-        for (var i = 0; i < removeRadio.length; i++) {
-            removeRadio[i].parentNode.removeChild(removeRadio[i]);
-        };
-
-        for (var i = 0; i < removeLabel.length; i++) {
-            removeLabel[i].parentNode.removeChild(removeLabel[i]);
-        };
-
-        removeArticle.parentNode.removeChild(removeArticle);
-        removeButtons[2].parentNode.removeChild(removeButtons[2]);
-        removeButtons[1].parentNode.removeChild(removeButtons[1]);
-};
+        removeElements('button');
+        removeElements('[name=toggle]');
+        removeElements('label');
+        removeElements('article');
+    };
     
     gapi.client.load('youtube', 'v3', onYouTubeApiLoad);
 }
@@ -279,19 +298,19 @@ function searchYouTube() {
 }
 
 function loadStats(searchResult) { 
-var videoIds = []; 
+    var videoIds = []; 
 
-//Collect Ids from search items
-searchResult.items.map(function(i){ 
-videoIds.push(i.id.videoId); 
-}); 
+    //Collect Ids from search items
+    searchResult.items.map(function(i){ 
+    videoIds.push(i.id.videoId); 
+    }); 
 
-//New request for statistics
-var request = gapi.client.youtube.videos.list({ 
-part: 'snippet, statistics', 
-id: videoIds.join(',') 
-}); 
+    //New request for statistics
+    var request = gapi.client.youtube.videos.list({ 
+    part: 'snippet, statistics', 
+    id: videoIds.join(',') 
+    }); 
 
-//Show results with rich data
-request.execute(showResponse); 
+    //Show results with rich data
+    request.execute(showResponse); 
 }
