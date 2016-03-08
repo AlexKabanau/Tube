@@ -1,5 +1,5 @@
 
-(function addElements(){
+(function (){
 
     var main = document.createElement('main');
 
@@ -48,7 +48,7 @@ function showItemsNext() {
     for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++) {
         var elementes = document.getElementsByClassName('galleryItem');
         if (elementes[i].getBoundingClientRect().left>document.documentElement.clientWidth*0.9) {
-            var next = i; break;
+            next = i; break;
         }
     };
     widthClientWindow();
@@ -56,22 +56,31 @@ function showItemsNext() {
     var container = document.body.getElementsByClassName('container');
     widthClient = next*0.9*document.documentElement.clientWidth/nCol;
     container[1].style.transform = 'translate(-' + widthClient + 'px)';
+    for (var i=0; i<document.querySelector('.slider-controls').querySelectorAll('label').length; i++){
+        document.querySelector('.slider-controls').querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
+    }
+    document.querySelector('.slider-controls').querySelector('label[for="btn-'+ (next/nCol) + '"]').style.background = '#666';
 }
 
 function showItemsPrevious() {
     for (var i=document.getElementsByClassName('container')[1].childNodes.length-1; i>=0; i--) {
         var elementes = document.getElementsByClassName('galleryItem'); 
         if (elementes[i].getBoundingClientRect().left < 0) {
-            var previous = i+1; break;
+            previous = i+1; break;
         }
     };
     widthClientWindow();
     var container = document.body.getElementsByClassName('container');
     widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
     container[1].style.transform = 'translate(-' + widthClient + 'px)';
+    for (var i=0; i<document.querySelector('.slider-controls').querySelectorAll('label').length; i++){
+        document.querySelector('.slider-controls').querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
+    }
+    document.querySelector('.slider-controls').querySelector('label[for="btn-'+ ((previous/nCol)-1) + '"]').style.background = '#666';
 }
 
 function widthClientWindow () {
+    widthClient=0;
     widthClient = 0.9*document.documentElement.clientWidth;
     nCol = (widthClient - (widthClient % 300))/300;/*number of column*/
     if (nCol > 5) {nCol = 5};
@@ -166,7 +175,7 @@ function showResponse(elements) {
 
         addLabels(elements);
         //addLabelClick(elements);
-     /*   window.onresize = function(elements) {
+        window.onresize = function() {
             removeElements('[name=toggle]');
             removeElements('label');
 
@@ -175,7 +184,7 @@ function showResponse(elements) {
 
         
 
-        */
+        
 
         document.querySelector('.slider-controls').querySelector('label[for="btn-0"]').style.background = '#666';
 
@@ -210,10 +219,10 @@ function slider() {
     };
 }
 
-function addLabels(elements){
+function addLabels(videoElement){
     var fragmentRadio = document.createDocumentFragment();
     widthClientWindow();
-    numberInput = (elements.items.length)/nCol;
+    numberInput = (videoElement.items.length)/nCol;
     for (var i = 0; i < numberInput; i++) {
         var radio = document.createElement('input');
         radio.type = 'radio';
@@ -234,12 +243,12 @@ function addLabels(elements){
     fragmentRadio.appendChild(sliderControls);
 
     document.body.appendChild(fragmentRadio);
-    addLabelClick(elements);
+    addLabelClick(videoElement);
 }
 
-function addLabelClick(elements){
+function addLabelClick(videoElement){
     widthClientWindow();
-    numberInput = (elements.items.length)/nCol;
+    numberInput = (videoElement.items.length)/nCol;
     labels = document.getElementsByTagName('label');
         for (i = 0; i < numberInput; i++) {
             function labelClick(arg) {
@@ -247,6 +256,7 @@ function addLabelClick(elements){
                     for (j=0; j<numberInput; j++) {
                         document.querySelector('.slider-controls').querySelector('label[for="btn-'+ j + '"]').style.background = '#ccc';
                     }
+                    widthClientWindow();
                     document.querySelector('.slider-controls').querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
                     document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
                 });
