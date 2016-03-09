@@ -56,10 +56,10 @@ function showItemsNext() {
     var container = document.body.getElementsByClassName('container');
     widthClient = next*0.9*document.documentElement.clientWidth/nCol;
     container[1].style.transform = 'translate(-' + widthClient + 'px)';
-    for (var i=0; i<document.querySelector('.slider-controls').querySelectorAll('label').length; i++){
-        document.querySelector('.slider-controls').querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
+    for (var i=0; i<document.querySelectorAll('label').length; i++){
+        document.querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
     }
-    document.querySelector('.slider-controls').querySelector('label[for="btn-'+ (next/nCol) + '"]').style.background = '#666';
+    document.querySelector('label[for="btn-'+ (next/nCol) + '"]').style.background = '#666';
 }
 
 function showItemsPrevious() {
@@ -73,10 +73,10 @@ function showItemsPrevious() {
     var container = document.body.getElementsByClassName('container');
     widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
     container[1].style.transform = 'translate(-' + widthClient + 'px)';
-    for (var i=0; i<document.querySelector('.slider-controls').querySelectorAll('label').length; i++){
-        document.querySelector('.slider-controls').querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
+    for (var i=0; i<document.querySelectorAll('label').length; i++){
+        document.querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
     }
-    document.querySelector('.slider-controls').querySelector('label[for="btn-'+ ((previous/nCol)-1) + '"]').style.background = '#666';
+    document.querySelector('label[for="btn-'+ ((previous/nCol)-1) + '"]').style.background = '#666';
 }
 
 function widthClientWindow () {
