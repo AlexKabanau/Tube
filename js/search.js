@@ -44,6 +44,59 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
 
 
 
+
+
+function showResponse(elements) {
+
+    window.onresize = function() {   
+        //alert('Размер окна был изменен!');
+        widthClientWindow();
+        var galleryItem = document.getElementsByClassName('galleryItem');
+        for (var i=0; i<elements.items.length; i++){
+            galleryItem[i].style.width = (widthItem) + 'px';
+        };
+        removeElements('[name=toggle]');
+        removeElements('label');
+
+        addLabels(elements);
+
+        document.querySelector('label[for="btn-0"]').style.background = '#666';
+    };
+
+    var article = document.createElement('article');
+
+    var container = document.createElement('div');
+        container.className = 'container';
+
+    widthClientWindow();
+//////////////customEvent/////////
+    addFragmentItems(elements, container);
+
+    
+
+    article.appendChild(container);
+    document.body.appendChild(article);
+
+    
+
+    addButtons();
+
+    addLabels(elements);
+    
+    document.querySelector('label[for="btn-0"]').style.background = '#666';
+
+    document.getElementById("buttonNext").addEventListener("click", function(event) {
+      showItemsNext();
+    });
+
+    document.getElementById("buttonPrevious").addEventListener("click", function(event) {
+      showItemsPrevious();
+    });
+
+    slider();
+
+}
+
 function showItemsNext() {
     for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++) {
         var elementes = document.getElementsByClassName('galleryItem');
@@ -91,77 +144,55 @@ function widthClientWindow () {
     };
 }
 
-function showResponse(elements) {
-    
-    var article = document.createElement('article');
+function addFragmentItems (elements, container) {
 
-    var container = document.createElement('div');
-        container.className = 'container';
-    var fragment = document.createDocumentFragment();
-     
-    widthClientWindow();
-
-    window.onresize = function() {   
-        //alert('Размер окна был изменен!');
-        widthClientWindow();
-        var galleryItem = document.getElementsByClassName('galleryItem');
+        var fragment = document.createDocumentFragment();
+        
         for (var i=0; i<elements.items.length; i++){
-            galleryItem[i].style.width = (widthItem) + 'px';
-        };
-        removeElements('[name=toggle]');
-        removeElements('label');
+            var galleryItem = document.createElement('div');
+            galleryItem.className = 'galleryItem';
+            galleryItem.style.width = (widthItem) + 'px';
+            fragment.appendChild(galleryItem);
 
-        addLabels(elements);
+            var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
+            a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
+            galleryItem.appendChild(a);
 
-        document.querySelector('label[for="btn-0"]').style.background = '#666';
+            var h4 = document.createElement('h4');
+            h4.innerHTML = elements.items[i].snippet.title;
+            a.appendChild(h4);
 
-    };
+            var img = document.createElement('img');
+            img.src = elements.items[i].snippet.thumbnails.high.url;
+            a.appendChild(img); 
 
-      for (var i=0; i<elements.items.length; i++){
-        var galleryItem = document.createElement('div');
-        galleryItem.className = 'galleryItem';
-        galleryItem.style.width = (widthItem) + 'px';
-        fragment.appendChild(galleryItem);
-        
-        var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
-        a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
-        galleryItem.appendChild(a);
+            var p = document.createElement('p');
+            p.innerHTML = elements.items[i].snippet.description;
+            galleryItem.appendChild(p); 
 
-        var h4 = document.createElement('h4');
-        h4.innerHTML = elements.items[i].snippet.title;
-        a.appendChild(h4);
+            var aChanel = document.createElement('a');
+            aChanel.href = 'http://www.youtube.com/channel/'+elements.items[i].snippet.channelId;
+            galleryItem.appendChild(aChanel);
 
-        var img = document.createElement('img');
-        img.src = elements.items[i].snippet.thumbnails.high.url;
-        a.appendChild(img); 
+            var h5 = document.createElement('h5');
+            h5.innerHTML = elements.items[i].snippet.channelTitle;
+            aChanel.appendChild(h5);
 
-        var p = document.createElement('p');
-        p.innerHTML = elements.items[i].snippet.description;
-        galleryItem.appendChild(p); 
+            var h5 = document.createElement('h5');
+            h5.class = 'viewCount';
+            h5.innerHTML = 'Просмотров: '+elements.items[i].statistics.viewCount;
+            galleryItem.appendChild(h5);
 
-        var aChanel = document.createElement('a');
-        aChanel.href = 'http://www.youtube.com/channel/'+elements.items[i].snippet.channelId;
-        galleryItem.appendChild(aChanel);
+            var h6 = document.createElement('h6');
+            h6.class = 'likeCount';
+            h6.innerHTML = 'Likes: '+elements.items[i].statistics.likeCount;
+            galleryItem.appendChild(h6);
 
-        var h5 = document.createElement('h5');
-        h5.innerHTML = elements.items[i].snippet.channelTitle;
-        aChanel.appendChild(h5);
+        }
+          container.appendChild(fragment);
+}
 
-        var h5 = document.createElement('h5');
-        h5.class = 'viewCount';
-        h5.innerHTML = 'Просмотров: '+elements.items[i].statistics.viewCount;
-        galleryItem.appendChild(h5);
-        
-        var h6 = document.createElement('h6');
-        h6.class = 'likeCount';
-        h6.innerHTML = 'Likes: '+elements.items[i].statistics.likeCount;
-        galleryItem.appendChild(h6);
-        
-      }
-      container.appendChild(fragment);
-      article.appendChild(container);
-      document.body.appendChild(article);
-
+function addButtons(){
       var buttonNext = document.createElement('button');
         buttonNext.id = 'buttonNext';
         buttonNext.innerHTML = 'Далее';
@@ -179,31 +210,6 @@ function showResponse(elements) {
         buttonPrevious.style = 'position: relative; margin-left: 20px; top: 27px;'
 
         document.body.appendChild(buttonPrevious);
-
-        addLabels(elements);
-        //addLabelClick(elements);
-        /*window.onresize = function() {
-            removeElements('[name=toggle]');
-            removeElements('label');
-            addLabels(elements);
-        };*/
-
-        
-
-        
-
-        document.querySelector('label[for="btn-0"]').style.background = '#666';
-
-        document.getElementById("buttonNext").addEventListener("click", function(event) {
-          showItemsNext();
-        });
-
-        document.getElementById("buttonPrevious").addEventListener("click", function(event) {
-          showItemsPrevious();
-        });
-
-        slider();
-
 }
 
 function slider() {
@@ -271,8 +277,6 @@ function addLabelClick(videoElement){
         }
 }
 
-
-
 function removeElements(element){
 
     var removeElem = document.querySelectorAll(element);
@@ -298,17 +302,20 @@ function onClientLoad() {
 
 function onYouTubeApiLoad() {
     gapi.client.setApiKey('AIzaSyDydcKXefY4Zcn0m4fFybaEIK0pw-bJtTs');
-    searchYouTube();
+    searchYouTube(null);
 }
 
-function searchYouTube() {
+function searchYouTube(page) {
     var search = document.getElementById('search').value;
     if (search != ''){
     var request = gapi.client.youtube.search.list({
         part: 'id, snippet',
         maxResults: 15,
-        q: search
+        q: search,
+        pageToken: page
     });
+    // Send the request to the API server,
+    // and invoke loadStats() with the response.
     request.execute(loadStats);
     };
 }
@@ -328,5 +335,12 @@ function loadStats(searchResult) {
     }); 
 
     //Show results with rich data
-    request.execute(showResponse); 
+    // Send the request to the API server,
+    // and invoke showResponse() with the response.
+    // Called automatically with the response of the YouTube API request.
+    request.execute(saveResults); 
 }
+
+function saveResults (ResultOS){
+    myResults = ResultOS;
+};
