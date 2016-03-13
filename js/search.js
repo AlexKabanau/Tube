@@ -33,17 +33,24 @@ document.getElementById('search').focus();
 
 document.getElementById('search').addEventListener('keydown', function(event) {
     if (event.keyCode == 13) {
-        showResponse();
-        onClientLoad();
+        clickSearch();
         event.preventDefault();
     }
 });
 document.getElementById('buttonSearch').addEventListener('click', function() {
-        showResponse();
-        onClientLoad();
+        clickSearch();
     });
 
-
+function clickSearch (){
+    if (document.querySelector('article')!=null) {
+        removeElements('button');
+        removeElements('[name=toggle]');
+        removeElements('label');
+        removeElements('article');
+    }
+    showResponse();
+    onClientLoad();
+}
 
 
 
@@ -71,7 +78,7 @@ function showResponse() {
         container.className = 'container';
 
     widthClientWindow();
-//////////////customEvent/////////
+    //////////////customEvent/////////
     //addFragmentItems(elements, container);
 
     
@@ -104,7 +111,6 @@ function showResponse() {
     */
 
     slider();
-
 }
 
 function showItemsNext() {
@@ -118,7 +124,7 @@ function showItemsNext() {
         }
     };
     widthClientWindow();
-    //уменьшить количество лазаний в дом
+    //уменьшить количество лазаний в дом в циклах
     widthClient = next*0.9*document.documentElement.clientWidth/nCol;
     selectContainer.style.transform = 'translate(-' + widthClient + 'px)';
     for (var i = 0; i < document.querySelectorAll('label').length; i++){
@@ -126,12 +132,7 @@ function showItemsNext() {
     }
     document.querySelector('label[for="btn-'+ (next/nCol) + '"]').style.background = '#666';
     if ((next/nCol) == document.querySelectorAll('label').length-2){
-        penultLabel();
-        alert('hello');
-        removeElements('[name=toggle]');
-        removeElements('label');
-        alert('удалил пэйджинг');
-        
+        penultLabelClick();
     };
 }
 
@@ -150,6 +151,14 @@ function showItemsPrevious() {
         document.querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
     }
     document.querySelector('label[for="btn-'+ ((previous/nCol)-1) + '"]').style.background = '#666';
+}
+
+function penultLabelClick(){
+    penultLabel();
+    alert('сейчас удалится пэйджинг');
+    removeElements('[name=toggle]');
+    removeElements('label');
+    alert('удалил пэйджинг');
 }
 
 function widthClientWindow () {
@@ -257,6 +266,9 @@ function addLabels(videoElement){
     var fragmentRadio = document.createDocumentFragment();
     widthClientWindow();
     numberInput = (videoElement.items.length)/nCol;
+    if (document.getElementsByClassName('container')[1]!=null) {
+        numberInput = (document.getElementsByClassName('galleryItem').length)/nCol;
+    };
     for (var i = 0; i < numberInput; i++) {
         var radio = document.createElement('input');
         radio.type = 'radio';
@@ -285,6 +297,9 @@ function addLabels(videoElement){
 function addLabelClick(videoElement){
     widthClientWindow();
     numberInput = (videoElement.items.length)/nCol;
+    if (document.getElementsByClassName('container')[1]!=null) {
+        numberInput = (document.getElementsByClassName('galleryItem').length)/nCol;
+    };
     labels = document.getElementsByTagName('label');
         for (i = 0; i < numberInput; i++) {
             function labelClick(arg) {
@@ -297,8 +312,7 @@ function addLabelClick(videoElement){
                     document.querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
                     document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
                     if (arg == document.querySelectorAll('label').length-2){
-                        penultLabel();
-                        alert('hello');
+                        penultLabelClick();
                     };
                 });
             };
@@ -327,10 +341,6 @@ function onClientLoad() {
 
     if (document.querySelectorAll('container')[1]!=null) {
         removeElements('container');
-        /*removeElements('button');
-        removeElements('[name=toggle]');
-        removeElements('label');
-        removeElements('article');*/
     };
     
     gapi.client.load('youtube', 'v3', onYouTubeApiLoad);
@@ -387,5 +397,6 @@ function saveResults (ResultOS){
 
 function showElements (elements){
     addFragmentItems(elements);
+    alert('сейчас добавится пэйджинг');
     addLabels(elements);
 }
