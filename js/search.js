@@ -26,19 +26,21 @@
 
 })()
 
-
+var selectContainer;
 
 document.getElementById('search').focus();
 
 
-document.getElementById("search").addEventListener("keydown", function(event) {
+document.getElementById('search').addEventListener('keydown', function(event) {
     if (event.keyCode == 13) {
-      onClientLoad();
-      event.preventDefault();
+        showResponse();
+        onClientLoad();
+        event.preventDefault();
     }
 });
-document.getElementById("buttonSearch").addEventListener("click", function() {
-      onClientLoad();
+document.getElementById('buttonSearch').addEventListener('click', function() {
+        showResponse();
+        onClientLoad();
     });
 
 
@@ -46,7 +48,7 @@ document.getElementById("buttonSearch").addEventListener("click", function() {
 
 
 
-function showResponse(elements) {
+function showResponse() {
 
     window.onresize = function() {   
         //alert('Размер окна был изменен!');
@@ -70,7 +72,7 @@ function showResponse(elements) {
 
     widthClientWindow();
 //////////////customEvent/////////
-    addFragmentItems(elements, container);
+    //addFragmentItems(elements, container);
 
     
 
@@ -81,51 +83,69 @@ function showResponse(elements) {
 
     addButtons();
 
-    addLabels(elements);
+    //addLabels(elements);
     
-    document.querySelector('label[for="btn-0"]').style.background = '#666';
+    //document.querySelector('label[for="btn-0"]').style.background = '#666';
 
-    document.getElementById("buttonNext").addEventListener("click", function(event) {
+    document.getElementById("buttonNext").addEventListener("click", function() {
       showItemsNext();
     });
 
-    document.getElementById("buttonPrevious").addEventListener("click", function(event) {
+    document.getElementById("buttonPrevious").addEventListener("click", function() {
       showItemsPrevious();
     });
+
+    /*var penult = document.querySelectorAll('label').length-1;
+    if ((document.querySelector('label[for="btn-' + penult + '"]').style.background!=null) && (document.querySelector('label[for="btn-' + penult + '"]').style.background=='rgb(102, 102, 102)')){
+        alert('sdfdsf');
+        };
+        /*.addEventListener('click', function(event) {penultLabel(videoElement);});
+            };
+    */
 
     slider();
 
 }
 
 function showItemsNext() {
-    for (var i=0; i<document.getElementsByClassName('container')[1].childNodes.length; i++) {
+    selectContainer = selectContainer||document.getElementsByClassName('container')[1];
+    //длинну массива взять
+    //элементы
+    for (var i=0; i<selectContainer.childNodes.length; i++) {
         var elementes = document.getElementsByClassName('galleryItem');
-        if (elementes[i].getBoundingClientRect().left>document.documentElement.clientWidth*0.9) {
+        if (elementes[i].getBoundingClientRect().left > document.documentElement.clientWidth * 0.9) {
             next = i; break;
         }
     };
     widthClientWindow();
-
-    var container = document.body.getElementsByClassName('container');
+    //уменьшить количество лазаний в дом
     widthClient = next*0.9*document.documentElement.clientWidth/nCol;
-    container[1].style.transform = 'translate(-' + widthClient + 'px)';
-    for (var i=0; i<document.querySelectorAll('label').length; i++){
+    selectContainer.style.transform = 'translate(-' + widthClient + 'px)';
+    for (var i = 0; i < document.querySelectorAll('label').length; i++){
         document.querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
     }
     document.querySelector('label[for="btn-'+ (next/nCol) + '"]').style.background = '#666';
+    if ((next/nCol) == document.querySelectorAll('label').length-2){
+        penultLabel();
+        alert('hello');
+        removeElements('[name=toggle]');
+        removeElements('label');
+        alert('удалил пэйджинг');
+        
+    };
 }
 
 function showItemsPrevious() {
-    for (var i=document.getElementsByClassName('container')[1].childNodes.length-1; i>=0; i--) {
+    for (var i=selectContainer.childNodes.length-1; i>=0; i--) {
         var elementes = document.getElementsByClassName('galleryItem'); 
         if (elementes[i].getBoundingClientRect().left < 0) {
             previous = i+1; break;
         }
     };
     widthClientWindow();
-    var container = document.body.getElementsByClassName('container');
+
     widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
-    container[1].style.transform = 'translate(-' + widthClient + 'px)';
+    selectContainer.style.transform = 'translate(-' + widthClient + 'px)';
     for (var i=0; i<document.querySelectorAll('label').length; i++){
         document.querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
     }
@@ -137,17 +157,18 @@ function widthClientWindow () {
     widthClient = 0.9*document.documentElement.clientWidth;
     nCol = (widthClient - (widthClient % 300))/300;/*number of column*/
     if (nCol > 5) {nCol = 5};
-    widthItem = widthClient/(nCol)-3*2/**/;/*6=3px*2padding*/
+    widthItem = widthClient/(nCol) - 3 * 2;/*6=3px*2padding*/
     if (widthItem < 300) {
         nCol = nCol - 1;
-        widthItem = widthClient/(nCol)-3*2;
+        widthItem = widthClient/(nCol)- 3 * 2;
     };
 }
 
-function addFragmentItems (elements, container) {
+function addFragmentItems (elements) {
 
         var fragment = document.createDocumentFragment();
-        
+        container = document.getElementsByClassName('container')[1];
+        //длинна
         for (var i=0; i<elements.items.length; i++){
             var galleryItem = document.createElement('div');
             galleryItem.className = 'galleryItem';
@@ -199,7 +220,7 @@ function addButtons(){
         buttonNext.style = 'position: relative; left: 100%; top: 27px; margin-left: -80px;';
 
         document.body.appendChild(buttonNext);
-
+        //перед апендом
         document.getElementById("buttonNext").addEventListener("click", function(event) {
           showItemsNext();
         });
@@ -207,6 +228,7 @@ function addButtons(){
         var buttonPrevious = document.createElement('button');
         buttonPrevious.id = 'buttonPrevious';
         buttonPrevious.innerHTML = 'Назад';
+        //инлайн стилем лучше не пользоваться
         buttonPrevious.style = 'position: relative; margin-left: 20px; top: 27px;'
 
         document.body.appendChild(buttonPrevious);
@@ -219,9 +241,9 @@ function slider() {
         var shiftX = event.clientX;
         slider.onmouseup = function(event){
             var upX = event.clientX;
-            if ((shiftX-upX)>100){
+            if ((shiftX - upX) > 100){
                 showItemsNext();
-            } else if ((shiftX-upX)<-100){
+            } else if ((shiftX - upX) < -100){
                 showItemsPrevious();
             }
         }
@@ -251,10 +273,12 @@ function addLabels(videoElement){
 
         sliderControls.appendChild(label);
     }
+    
 
     fragmentRadio.appendChild(sliderControls);
 
     document.body.appendChild(fragmentRadio);
+    document.querySelector('label[for="btn-0"]').style.background = '#666';
     addLabelClick(videoElement);
 }
 
@@ -268,13 +292,24 @@ function addLabelClick(videoElement){
                     for (j=0; j<numberInput; j++) {
                         document.querySelector('label[for="btn-'+ j + '"]').style.background = '#ccc';
                     }
+                    //эвент лиснер тарген
                     widthClientWindow();
                     document.querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
                     document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
+                    if (arg == document.querySelectorAll('label').length-2){
+                        penultLabel();
+                        alert('hello');
+                    };
                 });
             };
             labelClick(i);
+            
         }
+}
+
+function penultLabel(){
+    var newSearch = nextPageToken;
+    searchYouTube(newSearch);
 }
 
 function removeElements(element){
@@ -282,7 +317,7 @@ function removeElements(element){
     var removeElem = document.querySelectorAll(element);
     var lengthElem = removeElem.length;
     var i=0;
-    if (element == 'button'){ i=1; };
+    if (element == 'button' || element == 'container'){ i=1; };
     for (i; i<lengthElem; i++){
         removeElem[i].parentNode.removeChild(removeElem[i]);
     }
@@ -290,11 +325,12 @@ function removeElements(element){
 
 function onClientLoad() {
 
-    if (document.querySelector('article')!=null) {
-        removeElements('button');
+    if (document.querySelectorAll('container')[1]!=null) {
+        removeElements('container');
+        /*removeElements('button');
         removeElements('[name=toggle]');
         removeElements('label');
-        removeElements('article');
+        removeElements('article');*/
     };
     
     gapi.client.load('youtube', 'v3', onYouTubeApiLoad);
@@ -322,7 +358,7 @@ function searchYouTube(page) {
 
 function loadStats(searchResult) { 
     var videoIds = []; 
-
+    nextPageToken = searchResult.nextPageToken;
     //Collect Ids from search items
     searchResult.items.map(function(i){ 
     videoIds.push(i.id.videoId); 
@@ -342,5 +378,14 @@ function loadStats(searchResult) {
 }
 
 function saveResults (ResultOS){
-    myResults = ResultOS;
-};
+    myResults =[];
+    for (i=0; i<ResultOS.items.length; i++){
+        myResults.push(ResultOS.items[i])
+    };
+    showElements(ResultOS);
+}
+
+function showElements (elements){
+    addFragmentItems(elements);
+    addLabels(elements);
+}
