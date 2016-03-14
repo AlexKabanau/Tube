@@ -46,10 +46,12 @@ function clickSearch (){
         removeElements('button');
         removeElements('[name=toggle]');
         removeElements('label');
+        removeElements('.slider-controls');
         removeElements('article');
     }
     showResponse();
     onClientLoad();
+    //document.querySelector('label[for="btn-0"]').style.background = '#666';
 }
 
 
@@ -61,13 +63,14 @@ function showResponse() {
         //alert('Размер окна был изменен!');
         widthClientWindow();
         var galleryItem = document.getElementsByClassName('galleryItem');
-        for (var i=0; i<elements.items.length; i++){
+        //itemsLength = document.getElementsByClassName('galleryItem').length;
+        for (var i=0; i<galleryItem.length; i++){
             galleryItem[i].style.width = (widthItem) + 'px';
         };
         removeElements('[name=toggle]');
         removeElements('label');
 
-        addLabels(elements);
+        addLabels(galleryItem);
 
         document.querySelector('label[for="btn-0"]').style.background = '#666';
     };
@@ -114,7 +117,7 @@ function showResponse() {
 }
 
 function showItemsNext() {
-    selectContainer = selectContainer||document.getElementsByClassName('container')[1];
+    selectContainer = document.getElementsByClassName('container')[1];
     //длинну массива взять
     //элементы
     for (var i=0; i<selectContainer.childNodes.length; i++) {
@@ -134,6 +137,7 @@ function showItemsNext() {
     if ((next/nCol) == document.querySelectorAll('label').length-2){
         penultLabelClick();
     };
+    alert('01');
 }
 
 function showItemsPrevious() {
@@ -158,6 +162,7 @@ function penultLabelClick(){
     alert('сейчас удалится пэйджинг');
     removeElements('[name=toggle]');
     removeElements('label');
+    removeElements('.slider-controls');
     alert('удалил пэйджинг');
 }
 
@@ -264,8 +269,9 @@ function slider() {
 
 function addLabels(videoElement){
     var fragmentRadio = document.createDocumentFragment();
+    selectContainer = document.getElementsByClassName('container')[1];
     widthClientWindow();
-    numberInput = (videoElement.items.length)/nCol;
+    numberInput = (videoElement.length)/nCol;
     if (document.getElementsByClassName('container')[1]!=null) {
         numberInput = (document.getElementsByClassName('galleryItem').length)/nCol;
     };
@@ -290,13 +296,15 @@ function addLabels(videoElement){
     fragmentRadio.appendChild(sliderControls);
 
     document.body.appendChild(fragmentRadio);
-    document.querySelector('label[for="btn-0"]').style.background = '#666';
+    if (selectContainer.style.transform == ''){
+        document.querySelector('label[for="btn-0"]').style.background = '#666';
+    }
     addLabelClick(videoElement);
 }
 
 function addLabelClick(videoElement){
     widthClientWindow();
-    numberInput = (videoElement.items.length)/nCol;
+    numberInput = (videoElement.length)/nCol;
     if (document.getElementsByClassName('container')[1]!=null) {
         numberInput = (document.getElementsByClassName('galleryItem').length)/nCol;
     };
@@ -398,5 +406,6 @@ function saveResults (ResultOS){
 function showElements (elements){
     addFragmentItems(elements);
     alert('сейчас добавится пэйджинг');
-    addLabels(elements);
+
+    addLabels(elements.items);
 }
