@@ -42,6 +42,19 @@ button {
     color: #fff;
 }
 
+#buttonNext {
+  position: relative; 
+  left: 100%; 
+  top: 27px; 
+  margin-left: -80px;
+}
+
+#buttonPrevious {
+  position: relative; 
+  margin-left: 20px; 
+  top: 27px;
+}
+
 main .container {
   width: 95%;
   padding: 10px;

@@ -11,12 +11,21 @@
         inputSearch.type = 'search';
         inputSearch.setAttribute('value', '');
         inputSearch.placeholder = "Я ищу...";
-        
+        inputSearch.addEventListener('keydown', function(event) {
+            if (event.keyCode == 13) {
+                clickSearch();
+                event.preventDefault();
+            }
+        });
+
         container.appendChild(inputSearch);
 
     var buttonSearch = document.createElement('button');
         buttonSearch.id = 'buttonSearch';
         buttonSearch.innerHTML = 'Поиск';
+        buttonSearch.addEventListener('click', function() {
+            clickSearch();
+        });
 
         container.appendChild(buttonSearch);
 
@@ -26,20 +35,11 @@
 
 })()
 
+
 var selectContainer;
 
 document.getElementById('search').focus();
 
-
-document.getElementById('search').addEventListener('keydown', function(event) {
-    if (event.keyCode == 13) {
-        clickSearch();
-        event.preventDefault();
-    }
-});
-document.getElementById('buttonSearch').addEventListener('click', function() {
-        clickSearch();
-    });
 
 function clickSearch (){
     if (document.querySelector('article')!=null) {
@@ -51,22 +51,19 @@ function clickSearch (){
     }
     showResponse();
     onClientLoad();
-    //document.querySelector('label[for="btn-0"]').style.background = '#666';
 }
-
-
 
 
 function showResponse() {
 
     window.onresize = function() {   
-        //alert('Размер окна был изменен!');
         widthClientWindow();
         var galleryItem = document.getElementsByClassName('galleryItem');
-        //itemsLength = document.getElementsByClassName('galleryItem').length;
+
         for (var i=0; i<galleryItem.length; i++){
             galleryItem[i].style.width = (widthItem) + 'px';
         };
+        
         removeElements('[name=toggle]');
         removeElements('label');
 
@@ -81,100 +78,85 @@ function showResponse() {
         container.className = 'container';
 
     widthClientWindow();
-    //////////////customEvent/////////
-    //addFragmentItems(elements, container);
-
-    
 
     article.appendChild(container);
     document.body.appendChild(article);
 
-    
-
     addButtons();
-
-    //addLabels(elements);
-    
-    //document.querySelector('label[for="btn-0"]').style.background = '#666';
-
-    document.getElementById("buttonNext").addEventListener("click", function() {
-      showItemsNext();
-    });
-
-    document.getElementById("buttonPrevious").addEventListener("click", function() {
-      showItemsPrevious();
-    });
-
-    /*var penult = document.querySelectorAll('label').length-1;
-    if ((document.querySelector('label[for="btn-' + penult + '"]').style.background!=null) && (document.querySelector('label[for="btn-' + penult + '"]').style.background=='rgb(102, 102, 102)')){
-        alert('sdfdsf');
-        };
-        /*.addEventListener('click', function(event) {penultLabel(videoElement);});
-            };
-    */
 
     slider();
 }
 
 function showItemsNext() {
     selectContainer = document.getElementsByClassName('container')[1];
-    //длинну массива взять
-    //элементы
-    for (var i=0; i<selectContainer.childNodes.length; i++) {
-        var elementes = document.getElementsByClassName('galleryItem');
-        if (elementes[i].getBoundingClientRect().left > document.documentElement.clientWidth * 0.9) {
+    selectContainerChildLength = selectContainer.childNodes.length;
+
+    for (var i=0; i<selectContainerChildLength; i++) {
+        var items = document.getElementsByClassName('galleryItem');
+        if (items[i].getBoundingClientRect().left > document.documentElement.clientWidth * 0.9) {
             next = i; break;
         }
     };
     widthClientWindow();
-    //уменьшить количество лазаний в дом в циклах
+
     widthClient = next*0.9*document.documentElement.clientWidth/nCol;
     selectContainer.style.transform = 'translate(-' + widthClient + 'px)';
-    for (var i = 0; i < document.querySelectorAll('label').length; i++){
-        document.querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
+    labels = document.querySelectorAll('label');
+    labelsLength = labels.length;
+    
+    for (var i = 0; i < labelsLength; i++){
+        labels[i].style.background = '#ccc';
     }
+
     document.querySelector('label[for="btn-'+ (next/nCol) + '"]').style.background = '#666';
-    if ((next/nCol) == document.querySelectorAll('label').length-2){
+    
+    if ((next/nCol) == labelsLength-2){
         penultLabelClick();
     };
-    alert('01');
 }
 
 function showItemsPrevious() {
-    for (var i=selectContainer.childNodes.length-1; i>=0; i--) {
-        var elementes = document.getElementsByClassName('galleryItem'); 
-        if (elementes[i].getBoundingClientRect().left < 0) {
-            previous = i+1; break;
+    selectContainer = document.getElementsByClassName('container')[1];
+    selectContainerChildLength = selectContainer.childNodes.length;
+
+    for (var i = selectContainerChildLength - 1; i >= 0; i--) {
+        var items = document.getElementsByClassName('galleryItem'); 
+        if (items[i].getBoundingClientRect().left < 0) {
+            previous = i + 1; break;
         }
     };
     widthClientWindow();
 
-    widthClient = (previous-nCol)*0.9*document.documentElement.clientWidth/nCol;
+    widthClient = (previous - nCol) * 0.9 * document.documentElement.clientWidth / nCol;
     selectContainer.style.transform = 'translate(-' + widthClient + 'px)';
-    for (var i=0; i<document.querySelectorAll('label').length; i++){
-        document.querySelector('label[for="btn-'+ i + '"]').style.background = '#ccc';
+    labels = document.querySelectorAll('label');
+    labelsLength = labels.length;
+
+    for (var i = 0; i < labelsLength; i++){
+        labels[i].style.background = '#ccc';
     }
+
     document.querySelector('label[for="btn-'+ ((previous/nCol)-1) + '"]').style.background = '#666';
 }
 
 function penultLabelClick(){
     penultLabel();
-    alert('сейчас удалится пэйджинг');
+    //alert('сейчас удалится пэйджинг');
     removeElements('[name=toggle]');
     removeElements('label');
     removeElements('.slider-controls');
-    alert('удалил пэйджинг');
+    //alert('удалил пэйджинг');
 }
 
 function widthClientWindow () {
-    widthClient=0;
-    widthClient = 0.9*document.documentElement.clientWidth;
-    nCol = (widthClient - (widthClient % 300))/300;/*number of column*/
+    widthClient = 0;
+    widthClient = 0.9 * document.documentElement.clientWidth;
+    nCol = (widthClient - (widthClient % 300)) / 300;  //number of column
     if (nCol > 5) {nCol = 5};
-    widthItem = widthClient/(nCol) - 3 * 2;/*6=3px*2padding*/
+    widthItem = widthClient/(nCol) - 3 * 2;    //6=3px*2padding
     if (widthItem < 300) {
         nCol = nCol - 1;
-        widthItem = widthClient/(nCol)- 3 * 2;
+        widthItem = widthClient/(nCol) - 3 * 2;
     };
 }
 
@@ -182,15 +164,16 @@ function addFragmentItems (elements) {
 
         var fragment = document.createDocumentFragment();
         container = document.getElementsByClassName('container')[1];
-        //длинна
-        for (var i=0; i<elements.items.length; i++){
+        length = elements.items.length; 
+        
+        for (var i = 0; i<length; i++){
             var galleryItem = document.createElement('div');
             galleryItem.className = 'galleryItem';
             galleryItem.style.width = (widthItem) + 'px';
             fragment.appendChild(galleryItem);
 
-            var a = document.createElement('a');/*https://www.youtube.com/watch?v=Ukg_U3CnJWI*/
-            a.href = 'https://www.youtube.com/watch?v='+elements.items[i].id;
+            var a = document.createElement('a');   //https://www.youtube.com/watch?v=Ukg_U3CnJWI
+            a.href = 'https://www.youtube.com/watch?v=' + elements.items[i].id;
             galleryItem.appendChild(a);
 
             var h4 = document.createElement('h4');
@@ -206,7 +189,7 @@ function addFragmentItems (elements) {
             galleryItem.appendChild(p); 
 
             var aChanel = document.createElement('a');
-            aChanel.href = 'http://www.youtube.com/channel/'+elements.items[i].snippet.channelId;
+            aChanel.href = 'http://www.youtube.com/channel/' + elements.items[i].snippet.channelId;
             galleryItem.appendChild(aChanel);
 
             var h5 = document.createElement('h5');
@@ -215,12 +198,12 @@ function addFragmentItems (elements) {
 
             var h5 = document.createElement('h5');
             h5.class = 'viewCount';
-            h5.innerHTML = 'Просмотров: '+elements.items[i].statistics.viewCount;
+            h5.innerHTML = 'Просмотров: ' + elements.items[i].statistics.viewCount;
             galleryItem.appendChild(h5);
 
             var h6 = document.createElement('h6');
             h6.class = 'likeCount';
-            h6.innerHTML = 'Likes: '+elements.items[i].statistics.likeCount;
+            h6.innerHTML = 'Likes: ' + elements.items[i].statistics.likeCount;
             galleryItem.appendChild(h6);
 
         }
@@ -228,24 +211,23 @@ function addFragmentItems (elements) {
 }
 
 function addButtons(){
-      var buttonNext = document.createElement('button');
+    var buttonNext = document.createElement('button');
         buttonNext.id = 'buttonNext';
         buttonNext.innerHTML = 'Далее';
-        buttonNext.style = 'position: relative; left: 100%; top: 27px; margin-left: -80px;';
-
-        document.body.appendChild(buttonNext);
-        //перед апендом
-        document.getElementById("buttonNext").addEventListener("click", function(event) {
+        buttonNext.addEventListener("click", function(event) {
           showItemsNext();
         });
 
-        var buttonPrevious = document.createElement('button');
+    document.body.appendChild(buttonNext);
+
+    var buttonPrevious = document.createElement('button');
         buttonPrevious.id = 'buttonPrevious';
         buttonPrevious.innerHTML = 'Назад';
-        //инлайн стилем лучше не пользоваться
-        buttonPrevious.style = 'position: relative; margin-left: 20px; top: 27px;'
+        buttonPrevious.addEventListener("click", function(event) {
+          showItemsPrevious();
+        });
 
-        document.body.appendChild(buttonPrevious);
+    document.body.appendChild(buttonPrevious);
 }
 
 function slider() {
@@ -277,9 +259,9 @@ function addLabels(videoElement){
     };
     for (var i = 0; i < numberInput; i++) {
         var radio = document.createElement('input');
-        radio.type = 'radio';
-        radio.id = 'btn-'+ i;
-        radio.name = 'toggle';
+            radio.type = 'radio';
+            radio.id = 'btn-'+ i;
+            radio.name = 'toggle';
         fragmentRadio.appendChild(radio);
     }
     var sliderControls = document.createElement('div');
@@ -315,7 +297,7 @@ function addLabelClick(videoElement){
                     for (j=0; j<numberInput; j++) {
                         document.querySelector('label[for="btn-'+ j + '"]').style.background = '#ccc';
                     }
-                    //эвент лиснер тарген
+                    //эвент лиснер тарген????
                     widthClientWindow();
                     document.querySelector('label[for="btn-'+ arg + '"]').style.background = '#666';
                     document.body.getElementsByClassName('container')[1].style.transform = 'translate(-' + arg*widthClient + 'px)';
@@ -396,16 +378,14 @@ function loadStats(searchResult) {
 }
 
 function saveResults (ResultOS){
-    myResults =[];
+    /*myResults =[];
     for (i=0; i<ResultOS.items.length; i++){
         myResults.push(ResultOS.items[i])
-    };
+    };*/
     showElements(ResultOS);
 }
 
 function showElements (elements){
     addFragmentItems(elements);
-    alert('сейчас добавится пэйджинг');
-
     addLabels(elements.items);
 }
